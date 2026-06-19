@@ -1,0 +1,26 @@
+{
+  "name": "@interactive-edtech/mcp-shared",
+  "version": "0.1.0",
+  "description": "Shared MCP utilities: tool-definition contract, response formatting, pagination, error handling, auth, and HTTP client.",
+  "type": "module",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@interactive-edtech/core": "workspace:*",
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "zod": "^3.23.8"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "@interactive-edtech/nearpod",
+  "version": "0.1.0",
+  "description": "Nearpod adapter — generate a Google Slides-compatible .pptx lesson export (create) for import into Nearpod via Google Slides.",
+  "type": "module",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" } },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@interactive-edtech/core": "workspace:*",
+    "@interactive-edtech/mcp-shared": "workspace:*",
+    "pptxgenjs": "^3.12.0",
+    "zod": "^3.23.8"
+  }
+}

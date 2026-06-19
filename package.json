@@ -1,0 +1,32 @@
+{
+  "name": "interactive-edtech-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "An MCP server suite that lets coding agents generate deep instructional content from external sources and operate classroom-interactive EdTech platforms (Padlet, Google Classroom, Kahoot, Wayground/Quizizz, Wordwall, Nearpod).",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kevin Wu (FW1201)",
+  "homepage": "https://github.com/FW1201/interactive-edtech-mcp",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FW1201/interactive-edtech-mcp.git"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "pnpm -r build",
+    "clean": "pnpm -r clean",
+    "test": "pnpm -r test",
+    "typecheck": "pnpm -r typecheck",
+    "start": "node apps/server/dist/index.js",
+    "inspector": "npx @modelcontextprotocol/inspector node apps/server/dist/index.js"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "packageManager": "pnpm@11.8.0"
+}

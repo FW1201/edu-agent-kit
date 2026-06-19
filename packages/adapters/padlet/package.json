@@ -1,0 +1,21 @@
+{
+  "name": "@interactive-edtech/padlet",
+  "version": "0.1.0",
+  "description": "Padlet adapter — official REST API (create boards, posts, AI boards; read boards).",
+  "type": "module",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" } },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@interactive-edtech/core": "workspace:*",
+    "@interactive-edtech/mcp-shared": "workspace:*",
+    "zod": "^3.23.8"
+  }
+}

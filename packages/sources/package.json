@@ -1,0 +1,29 @@
+{
+  "name": "@interactive-edtech/sources",
+  "version": "0.1.0",
+  "description": "External-resource ingestion: file parsing (PDF/DOCX/TXT/MD), URL/web-search retrieval, and 108課綱 curriculum alignment — producing SourceMaterial for the generation layer.",
+  "type": "module",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@interactive-edtech/core": "workspace:*",
+    "@interactive-edtech/mcp-shared": "workspace:*",
+    "mammoth": "^1.8.0",
+    "node-html-parser": "^6.1.13",
+    "unpdf": "^0.12.1",
+    "zod": "^3.23.8"
+  }
+}

@@ -1,0 +1,50 @@
+<evaluation>
+  <!--
+    Deterministic, offline evaluations for interactive-edtech-mcp-server.
+    Each question is solved by calling the server's offline tools
+    (content_align_curriculum, content_generate_quiz brief/validate). Answers are
+    stable and verifiable by string comparison. Tools needing live credentials
+    (Padlet/Classroom/Kahoot Reports) or network (oEmbed/web_research) are
+    intentionally excluded so the suite runs without secrets.
+  -->
+  <qa_pair>
+    <question>Call content_align_curriculum with gradeLevel "國中一年級" and domain "數學". How many entries are in the returned coreCompetencies array?</question>
+    <answer>3</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Call content_align_curriculum with gradeLevel "國中一年級" and domain "數學". What is the value of the returned 'framework' field?</question>
+    <answer>108課綱</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Call content_align_curriculum with gradeLevel "Grade 5" and domain "english". What is the returned 'domain' field (the canonical domain it maps to)?</question>
+    <answer>英語文</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Call content_align_curriculum with gradeLevel "Grade 1" and domain "Underwater Basketweaving" (an unknown domain). How many entries are in the returned coreCompetencies array (the generic fallback)?</question>
+    <answer>2</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Call content_generate_quiz with topic "Cells", questionCount 10, and NO draftQuestions. In the required Bloom distribution of the returned brief, how many 'apply' questions are requested?</question>
+    <answer>3</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Call content_generate_quiz with topic "Cells", questionCount 10, and NO draftQuestions. In the required Bloom distribution of the returned brief, how many 'analyze' questions are requested?</question>
+    <answer>2</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Call content_generate_quiz with topic "Cells", questionCount 10, and NO draftQuestions. In the required Bloom distribution of the returned brief, how many 'remember' questions are requested?</question>
+    <answer>1</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Call content_generate_quiz with topic "Energy", questionCount 20, and NO draftQuestions. In the required Bloom distribution of the returned brief, how many 'apply' questions are requested?</question>
+    <answer>5</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Call content_align_curriculum with gradeLevel "國中二年級" and domain "自然科學". How many Bloom levels are in the returned bloomFocus array?</question>
+    <answer>3</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Call content_generate_quiz with topic "T", questionCount 1, and draftQuestions set to a single multiple_choice question that has bloomLevel "analyze", two options (one correct), and a non-empty explanation. What is the returned depth.higherOrderRatio?</question>
+    <answer>1</answer>
+  </qa_pair>
+</evaluation>
