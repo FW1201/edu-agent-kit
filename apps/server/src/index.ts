@@ -17,19 +17,25 @@ import type { ToolDefinition } from "@edu-agent-kit/mcp-shared";
 
 import { contentTools } from "./content-tools.js";
 import { workflowTools } from "./workflow-tools.js";
+import { wikiTools } from "./wiki-tools.js";
 import { padletTools } from "@edu-agent-kit/padlet";
 import { googleClassroomTools } from "@edu-agent-kit/google-classroom";
+import { googleWorkspaceTools } from "@edu-agent-kit/google-workspace";
+import { firebaseTools } from "@edu-agent-kit/firebase";
 import { kahootTools } from "@edu-agent-kit/kahoot";
 import { waygroundTools } from "@edu-agent-kit/wayground";
 import { wordwallTools } from "@edu-agent-kit/wordwall";
 import { nearpodTools } from "@edu-agent-kit/nearpod";
 
-const VERSION = "0.1.0";
+const VERSION = "0.2.0";
 
 const allTools: ToolDefinition[] = [
   ...contentTools,
+  ...wikiTools,
   ...padletTools,
   ...googleClassroomTools,
+  ...googleWorkspaceTools,
+  ...firebaseTools,
   ...kahootTools,
   ...waygroundTools,
   ...wordwallTools,

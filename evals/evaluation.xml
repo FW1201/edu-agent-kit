@@ -47,4 +47,12 @@
     <question>Call content_generate_quiz with topic "T", questionCount 1, and draftQuestions set to a single multiple_choice question that has bloomLevel "analyze", two options (one correct), and a non-empty explanation. What is the returned depth.higherOrderRatio?</question>
     <answer>1</answer>
   </qa_pair>
+  <qa_pair>
+    <question>Call wiki_list_templates. How many wiki structure templates are available?</question>
+    <answer>2</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Call wiki_list_templates. Which template id is the minimal, most-flexible single-teacher structure?</question>
+    <answer>minimal</answer>
+  </qa_pair>
 </evaluation>

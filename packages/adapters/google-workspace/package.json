@@ -1,7 +1,7 @@
 {
-  "name": "@edu-agent-kit/google-classroom",
+  "name": "@edu-agent-kit/google-workspace",
   "version": "0.1.0",
-  "description": "Google Classroom adapter — official API (courses, coursework, materials, announcements, roster, submissions, grading) via googleapis + OAuth2.",
+  "description": "Google Workspace adapter — create Docs, Slides, Forms, Sheets and manage Drive from generated teaching content, via googleapis + shared OAuth.",
   "type": "module",
   "license": "MIT",
   "main": "dist/index.js",

@@ -1,0 +1,18 @@
+{
+  "name": "edu-agent-kit",
+  "metadata": {
+    "description": "教育工作者的 agent 工具市集：本地教學知識庫 scaffolder、深度內容生成，以及課堂平台 / Google Workspace / Classroom / Firebase 輸出。"
+  },
+  "owner": {
+    "name": "Kevin Wu (FW1201)",
+    "url": "https://github.com/FW1201"
+  },
+  "plugins": [
+    {
+      "name": "edu-agent-kit",
+      "source": "./",
+      "description": "教育工作者的 agent 知識庫與工具組（LLM-wiki scaffolder + 內容生成 + 課堂平台/Google/Firebase 輸出）。包含 5 個教師 Skills 與 44-tool MCP server。",
+      "version": "0.2.0"
+    }
+  ]
+}

@@ -21,14 +21,44 @@ importers:
         specifier: ^2.1.8
         version: 2.1.9(@types/node@22.19.21)
 
+  apps/cli:
+    dependencies:
+      '@clack/prompts':
+        specifier: ^0.7.0
+        version: 0.7.0
+      '@edu-agent-kit/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@edu-agent-kit/firebase':
+        specifier: workspace:*
+        version: link:../../packages/adapters/firebase
+      '@edu-agent-kit/google-shared':
+        specifier: workspace:*
+        version: link:../../packages/adapters/google-shared
+      '@edu-agent-kit/google-workspace':
+        specifier: workspace:*
+        version: link:../../packages/adapters/google-workspace
+      '@edu-agent-kit/mcp-shared':
+        specifier: workspace:*
+        version: link:../../packages/mcp-shared
+      '@edu-agent-kit/wiki-kit':
+        specifier: workspace:*
+        version: link:../../packages/wiki-kit
+
   apps/server:
     dependencies:
       '@edu-agent-kit/core':
         specifier: workspace:*
         version: link:../../packages/core
+      '@edu-agent-kit/firebase':
+        specifier: workspace:*
+        version: link:../../packages/adapters/firebase
       '@edu-agent-kit/google-classroom':
         specifier: workspace:*
         version: link:../../packages/adapters/google-classroom
+      '@edu-agent-kit/google-workspace':
+        specifier: workspace:*
+        version: link:../../packages/adapters/google-workspace
       '@edu-agent-kit/kahoot':
         specifier: workspace:*
         version: link:../../packages/adapters/kahoot
@@ -47,6 +77,9 @@ importers:
       '@edu-agent-kit/wayground':
         specifier: workspace:*
         version: link:../../packages/adapters/wayground
+      '@edu-agent-kit/wiki-kit':
+        specifier: workspace:*
+        version: link:../../packages/wiki-kit
       '@edu-agent-kit/wordwall':
         specifier: workspace:*
         version: link:../../packages/adapters/wordwall
@@ -64,11 +97,53 @@ importers:
         specifier: ^4.17.21
         version: 4.17.25
 
+  packages/adapters/firebase:
+    dependencies:
+      '@edu-agent-kit/core':
+        specifier: workspace:*
+        version: link:../../core
+      '@edu-agent-kit/mcp-shared':
+        specifier: workspace:*
+        version: link:../../mcp-shared
+      zod:
+        specifier: ^3.23.8
+        version: 3.25.76
+
   packages/adapters/google-classroom:
     dependencies:
       '@edu-agent-kit/core':
         specifier: workspace:*
         version: link:../../core
+      '@edu-agent-kit/google-shared':
+        specifier: workspace:*
+        version: link:../google-shared
+      '@edu-agent-kit/mcp-shared':
+        specifier: workspace:*
+        version: link:../../mcp-shared
+      googleapis:
+        specifier: ^144.0.0
+        version: 144.0.0
+      zod:
+        specifier: ^3.23.8
+        version: 3.25.76
+
+  packages/adapters/google-shared:
+    dependencies:
+      '@edu-agent-kit/mcp-shared':
+        specifier: workspace:*
+        version: link:../../mcp-shared
+      googleapis:
+        specifier: ^144.0.0
+        version: 144.0.0
+
+  packages/adapters/google-workspace:
+    dependencies:
+      '@edu-agent-kit/core':
+        specifier: workspace:*
+        version: link:../../core
+      '@edu-agent-kit/google-shared':
+        specifier: workspace:*
+        version: link:../google-shared
       '@edu-agent-kit/mcp-shared':
         specifier: workspace:*
         version: link:../../mcp-shared
@@ -187,7 +262,21 @@ importers:
         specifier: ^3.23.8
         version: 3.25.76
 
+  packages/wiki-kit:
+    dependencies:
+      '@edu-agent-kit/mcp-shared':
+        specifier: workspace:*
+        version: link:../mcp-shared
+
 packages:
+
+  '@clack/core@0.3.5':
+    resolution: {integrity: sha512-5cfhQNH+1VQ2xLQlmzXMqUoiaH0lRBq9/CLW9lTyMbuKLC3+xEK01tHVvyut++mLOn5urSHmkm6I0Lg9MaJSTQ==}
+
+  '@clack/prompts@0.7.0':
+    resolution: {integrity: sha512-0MhX9/B4iL6Re04jPrttDm+BsP8y6mS7byuv0BvXgdXhbV5PdlsHt55dvNsuBCPZ7xq1oTAOOuotR9NFbQyMSA==}
+    bundledDependencies:
+      - is-unicode-supported
 
   '@esbuild/aix-ppc64@0.21.5':
     resolution: {integrity: sha512-1SDgH6ZSPTlggy1yI6+Dbkiz8xzpHJEVAlF/AM1tHPLsf5STom9rwtjE4hKAF20FfXXNTFqEYXyJNWh1GiZedQ==}
@@ -1721,6 +1810,9 @@ packages:
   simple-get@3.1.1:
     resolution: {integrity: sha512-CQ5LTKGfCpvE1K0n2us+kuMPbk/q0EKl82s4aheV9oXjFEz6W/Y7oQFVJuU6QG77hRT4Ghb5RURteF5vnWjupA==}
 
+  sisteransi@1.0.5:
+    resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
+
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
@@ -1960,6 +2052,17 @@ packages:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
 
 snapshots:
+
+  '@clack/core@0.3.5':
+    dependencies:
+      picocolors: 1.1.1
+      sisteransi: 1.0.5
+
+  '@clack/prompts@0.7.0':
+    dependencies:
+      '@clack/core': 0.3.5
+      picocolors: 1.1.1
+      sisteransi: 1.0.5
 
   '@esbuild/aix-ppc64@0.21.5':
     optional: true
@@ -3571,6 +3674,8 @@ snapshots:
       once: 1.4.0
       simple-concat: 1.0.1
     optional: true
+
+  sisteransi@1.0.5: {}
 
   source-map-js@1.2.1: {}
 
