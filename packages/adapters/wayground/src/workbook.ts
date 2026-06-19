@@ -1,7 +1,7 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import ExcelJS from "exceljs";
-import type { Quiz, Question } from "@interactive-edtech/core";
+import type { Quiz, Question } from "@edu-agent-kit/core";
 
 // Wayground (formerly Quizizz) spreadsheet-import template. Plain text only;
 // max 1 image per question. Valid time values per the importer.
@@ -122,7 +122,7 @@ export async function buildWaygroundWorkbook(
 ): Promise<{ path: string; warnings: string[]; questionCount: number }> {
   const warnings: string[] = [];
   const wb = new ExcelJS.Workbook();
-  wb.creator = "interactive-edtech-mcp";
+  wb.creator = "edu-agent-kit";
   const ws = wb.addWorksheet("Quiz");
 
   const header = [

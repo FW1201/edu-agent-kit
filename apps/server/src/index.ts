@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * interactive-edtech-mcp-server
+ * edu-agent-kit-server
  *
  * A single MCP server exposing:
  *  - content_*  : deep content generation from external sources (core value)
@@ -13,16 +13,16 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import express from "express";
-import type { ToolDefinition } from "@interactive-edtech/mcp-shared";
+import type { ToolDefinition } from "@edu-agent-kit/mcp-shared";
 
 import { contentTools } from "./content-tools.js";
 import { workflowTools } from "./workflow-tools.js";
-import { padletTools } from "@interactive-edtech/padlet";
-import { googleClassroomTools } from "@interactive-edtech/google-classroom";
-import { kahootTools } from "@interactive-edtech/kahoot";
-import { waygroundTools } from "@interactive-edtech/wayground";
-import { wordwallTools } from "@interactive-edtech/wordwall";
-import { nearpodTools } from "@interactive-edtech/nearpod";
+import { padletTools } from "@edu-agent-kit/padlet";
+import { googleClassroomTools } from "@edu-agent-kit/google-classroom";
+import { kahootTools } from "@edu-agent-kit/kahoot";
+import { waygroundTools } from "@edu-agent-kit/wayground";
+import { wordwallTools } from "@edu-agent-kit/wordwall";
+import { nearpodTools } from "@edu-agent-kit/nearpod";
 
 const VERSION = "0.1.0";
 
@@ -41,7 +41,7 @@ type RegisterCallback = Parameters<McpServer["registerTool"]>[2];
 
 function buildServer(): McpServer {
   const server = new McpServer({
-    name: "interactive-edtech-mcp-server",
+    name: "edu-agent-kit-server",
     version: VERSION,
   });
   for (const tool of allTools) {
@@ -64,7 +64,7 @@ async function runStdio(): Promise<void> {
   const transport = new StdioServerTransport();
   await server.connect(transport);
   console.error(
-    `interactive-edtech-mcp-server v${VERSION} running on stdio (${allTools.length} tools)`,
+    `edu-agent-kit-server v${VERSION} running on stdio (${allTools.length} tools)`,
   );
 }
 
@@ -94,7 +94,7 @@ async function runHttp(): Promise<void> {
   const port = parseInt(process.env.PORT ?? "3000", 10);
   app.listen(port, "127.0.0.1", () => {
     console.error(
-      `interactive-edtech-mcp-server v${VERSION} on http://127.0.0.1:${port}/mcp (${allTools.length} tools)`,
+      `edu-agent-kit-server v${VERSION} on http://127.0.0.1:${port}/mcp (${allTools.length} tools)`,
     );
   });
 }

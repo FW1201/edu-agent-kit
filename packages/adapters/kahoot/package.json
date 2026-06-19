@@ -1,5 +1,5 @@
 {
-  "name": "@interactive-edtech/kahoot",
+  "name": "@edu-agent-kit/kahoot",
   "version": "0.1.0",
   "description": "Kahoot! adapter — generate official .xlsx import workbook (create) and read/analyze results via the Reports API.",
   "type": "module",
@@ -14,8 +14,8 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@interactive-edtech/core": "workspace:*",
-    "@interactive-edtech/mcp-shared": "workspace:*",
+    "@edu-agent-kit/core": "workspace:*",
+    "@edu-agent-kit/mcp-shared": "workspace:*",
     "exceljs": "^4.4.0",
     "zod": "^3.23.8"
   }

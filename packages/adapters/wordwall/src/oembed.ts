@@ -1,4 +1,4 @@
-import { httpRequest } from "@interactive-edtech/mcp-shared";
+import { httpRequest } from "@edu-agent-kit/mcp-shared";
 
 /** Wordwall's public oEmbed endpoint — the ONLY public read API it offers. */
 export const WORDWALL_OEMBED_ENDPOINT = "https://wordwall.net/about/oembed";

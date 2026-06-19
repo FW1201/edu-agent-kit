@@ -6,8 +6,8 @@ import {
   errorResult,
   handleApiError,
   type ToolDefinition,
-} from "@interactive-edtech/mcp-shared";
-import { Lesson } from "@interactive-edtech/core";
+} from "@edu-agent-kit/mcp-shared";
+import { Lesson } from "@edu-agent-kit/core";
 import { buildNearpodPptx } from "./pptx.js";
 
 function slugify(s: string): string {

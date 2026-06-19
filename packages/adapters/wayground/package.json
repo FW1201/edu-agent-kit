@@ -1,5 +1,5 @@
 {
-  "name": "@interactive-edtech/wayground",
+  "name": "@edu-agent-kit/wayground",
   "version": "0.1.0",
   "description": "Wayground (formerly Quizizz) adapter — generate official spreadsheet import file (create) and read public resources via oEmbed.",
   "type": "module",
@@ -14,8 +14,8 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@interactive-edtech/core": "workspace:*",
-    "@interactive-edtech/mcp-shared": "workspace:*",
+    "@edu-agent-kit/core": "workspace:*",
+    "@edu-agent-kit/mcp-shared": "workspace:*",
     "exceljs": "^4.4.0",
     "zod": "^3.23.8"
   }

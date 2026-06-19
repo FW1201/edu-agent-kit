@@ -1,5 +1,5 @@
 {
-  "name": "@interactive-edtech/mcp-shared",
+  "name": "@edu-agent-kit/mcp-shared",
   "version": "0.1.0",
   "description": "Shared MCP utilities: tool-definition contract, response formatting, pagination, error handling, auth, and HTTP client.",
   "type": "module",
@@ -19,7 +19,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@interactive-edtech/core": "workspace:*",
+    "@edu-agent-kit/core": "workspace:*",
     "@modelcontextprotocol/sdk": "^1.12.0",
     "zod": "^3.23.8"
   }

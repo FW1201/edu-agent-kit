@@ -1,4 +1,4 @@
-import type { Quiz } from "@interactive-edtech/core";
+import type { Quiz } from "@edu-agent-kit/core";
 
 /**
  * Wordwall template families this adapter can prepare content for.

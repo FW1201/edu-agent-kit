@@ -4,7 +4,7 @@ import path from "node:path";
 import os from "node:os";
 import ExcelJS from "exceljs";
 import { buildWaygroundWorkbook } from "./workbook.js";
-import type { Quiz } from "@interactive-edtech/core";
+import type { Quiz } from "@edu-agent-kit/core";
 
 const tmpDir = path.join(os.tmpdir(), `wayground-test-${Date.now()}`);
 

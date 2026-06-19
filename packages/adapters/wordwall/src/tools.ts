@@ -1,14 +1,14 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { z } from "zod";
-import { Quiz } from "@interactive-edtech/core";
+import { Quiz } from "@edu-agent-kit/core";
 import {
   defineTool,
   dualResult,
   errorResult,
   handleApiError,
   type ToolDefinition,
-} from "@interactive-edtech/mcp-shared";
+} from "@edu-agent-kit/mcp-shared";
 import {
   buildWordwallContent,
   type WordwallContentInput,

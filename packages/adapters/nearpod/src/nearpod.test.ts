@@ -3,7 +3,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import os from "node:os";
 import { buildNearpodPptx } from "./pptx.js";
-import type { Lesson } from "@interactive-edtech/core";
+import type { Lesson } from "@edu-agent-kit/core";
 
 const tmpDir = path.join(os.tmpdir(), `nearpod-test-${Date.now()}`);
 

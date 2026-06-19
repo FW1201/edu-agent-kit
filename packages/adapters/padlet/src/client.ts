@@ -20,8 +20,8 @@
  * conjure a blank board.
  */
 
-import { httpRequest, requireEnv } from "@interactive-edtech/mcp-shared";
-import type { BoardPost } from "@interactive-edtech/core";
+import { httpRequest, requireEnv } from "@edu-agent-kit/mcp-shared";
+import type { BoardPost } from "@edu-agent-kit/core";
 
 /** Base URL for the Padlet API (v1). */
 export const PADLET_BASE_URL = "https://api.padlet.dev/v1";

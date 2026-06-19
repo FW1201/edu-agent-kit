@@ -6,7 +6,7 @@
  * one-time consent flow in `auth-cli.ts`.
  */
 import { google, type classroom_v1, type Auth } from "googleapis";
-import { JsonTokenStore, optionalEnv, requireEnv, MissingCredentialError } from "@interactive-edtech/mcp-shared";
+import { JsonTokenStore, optionalEnv, requireEnv, MissingCredentialError } from "@edu-agent-kit/mcp-shared";
 
 /** OAuth2 client type, sourced from googleapis' re-exported google-auth-library. */
 type OAuth2Client = Auth.OAuth2Client;

@@ -23,31 +23,31 @@ importers:
 
   apps/server:
     dependencies:
-      '@interactive-edtech/core':
+      '@edu-agent-kit/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@interactive-edtech/google-classroom':
+      '@edu-agent-kit/google-classroom':
         specifier: workspace:*
         version: link:../../packages/adapters/google-classroom
-      '@interactive-edtech/kahoot':
+      '@edu-agent-kit/kahoot':
         specifier: workspace:*
         version: link:../../packages/adapters/kahoot
-      '@interactive-edtech/mcp-shared':
+      '@edu-agent-kit/mcp-shared':
         specifier: workspace:*
         version: link:../../packages/mcp-shared
-      '@interactive-edtech/nearpod':
+      '@edu-agent-kit/nearpod':
         specifier: workspace:*
         version: link:../../packages/adapters/nearpod
-      '@interactive-edtech/padlet':
+      '@edu-agent-kit/padlet':
         specifier: workspace:*
         version: link:../../packages/adapters/padlet
-      '@interactive-edtech/sources':
+      '@edu-agent-kit/sources':
         specifier: workspace:*
         version: link:../../packages/sources
-      '@interactive-edtech/wayground':
+      '@edu-agent-kit/wayground':
         specifier: workspace:*
         version: link:../../packages/adapters/wayground
-      '@interactive-edtech/wordwall':
+      '@edu-agent-kit/wordwall':
         specifier: workspace:*
         version: link:../../packages/adapters/wordwall
       '@modelcontextprotocol/sdk':
@@ -66,10 +66,10 @@ importers:
 
   packages/adapters/google-classroom:
     dependencies:
-      '@interactive-edtech/core':
+      '@edu-agent-kit/core':
         specifier: workspace:*
         version: link:../../core
-      '@interactive-edtech/mcp-shared':
+      '@edu-agent-kit/mcp-shared':
         specifier: workspace:*
         version: link:../../mcp-shared
       googleapis:
@@ -81,10 +81,10 @@ importers:
 
   packages/adapters/kahoot:
     dependencies:
-      '@interactive-edtech/core':
+      '@edu-agent-kit/core':
         specifier: workspace:*
         version: link:../../core
-      '@interactive-edtech/mcp-shared':
+      '@edu-agent-kit/mcp-shared':
         specifier: workspace:*
         version: link:../../mcp-shared
       exceljs:
@@ -96,10 +96,10 @@ importers:
 
   packages/adapters/nearpod:
     dependencies:
-      '@interactive-edtech/core':
+      '@edu-agent-kit/core':
         specifier: workspace:*
         version: link:../../core
-      '@interactive-edtech/mcp-shared':
+      '@edu-agent-kit/mcp-shared':
         specifier: workspace:*
         version: link:../../mcp-shared
       pptxgenjs:
@@ -111,10 +111,10 @@ importers:
 
   packages/adapters/padlet:
     dependencies:
-      '@interactive-edtech/core':
+      '@edu-agent-kit/core':
         specifier: workspace:*
         version: link:../../core
-      '@interactive-edtech/mcp-shared':
+      '@edu-agent-kit/mcp-shared':
         specifier: workspace:*
         version: link:../../mcp-shared
       zod:
@@ -123,10 +123,10 @@ importers:
 
   packages/adapters/wayground:
     dependencies:
-      '@interactive-edtech/core':
+      '@edu-agent-kit/core':
         specifier: workspace:*
         version: link:../../core
-      '@interactive-edtech/mcp-shared':
+      '@edu-agent-kit/mcp-shared':
         specifier: workspace:*
         version: link:../../mcp-shared
       exceljs:
@@ -138,10 +138,10 @@ importers:
 
   packages/adapters/wordwall:
     dependencies:
-      '@interactive-edtech/core':
+      '@edu-agent-kit/core':
         specifier: workspace:*
         version: link:../../core
-      '@interactive-edtech/mcp-shared':
+      '@edu-agent-kit/mcp-shared':
         specifier: workspace:*
         version: link:../../mcp-shared
       zod:
@@ -156,7 +156,7 @@ importers:
 
   packages/mcp-shared:
     dependencies:
-      '@interactive-edtech/core':
+      '@edu-agent-kit/core':
         specifier: workspace:*
         version: link:../core
       '@modelcontextprotocol/sdk':
@@ -168,10 +168,10 @@ importers:
 
   packages/sources:
     dependencies:
-      '@interactive-edtech/core':
+      '@edu-agent-kit/core':
         specifier: workspace:*
         version: link:../core
-      '@interactive-edtech/mcp-shared':
+      '@edu-agent-kit/mcp-shared':
         specifier: workspace:*
         version: link:../mcp-shared
       mammoth:

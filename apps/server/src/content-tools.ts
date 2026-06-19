@@ -6,7 +6,7 @@ import {
   textResult,
   handleApiError,
   type ToolDefinition,
-} from "@interactive-edtech/mcp-shared";
+} from "@edu-agent-kit/mcp-shared";
 import {
   buildQuizBrief,
   buildLessonBrief,
@@ -16,13 +16,13 @@ import {
   validateBoard,
   scoreDepth,
   SourceMaterial,
-} from "@interactive-edtech/core";
+} from "@edu-agent-kit/core";
 import {
   ingestFile,
   ingestUrl,
   webSearch,
   alignCurriculum,
-} from "@interactive-edtech/sources";
+} from "@edu-agent-kit/sources";
 
 function parseSources(input: unknown): SourceMaterial[] {
   const parsed = z.array(SourceMaterial).safeParse(input ?? []);

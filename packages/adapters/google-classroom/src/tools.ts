@@ -15,8 +15,8 @@ import {
   handleApiError,
   objectToMarkdown,
   type ToolDefinition,
-} from "@interactive-edtech/mcp-shared";
-import { ResponseFormatSchema } from "@interactive-edtech/core";
+} from "@edu-agent-kit/mcp-shared";
+import { ResponseFormatSchema } from "@edu-agent-kit/core";
 import { getClassroom } from "./auth.js";
 import {
   buildAnnouncementBody,

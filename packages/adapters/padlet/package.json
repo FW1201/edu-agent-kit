@@ -1,5 +1,5 @@
 {
-  "name": "@interactive-edtech/padlet",
+  "name": "@edu-agent-kit/padlet",
   "version": "0.1.0",
   "description": "Padlet adapter — official REST API (create boards, posts, AI boards; read boards).",
   "type": "module",
@@ -14,8 +14,8 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@interactive-edtech/core": "workspace:*",
-    "@interactive-edtech/mcp-shared": "workspace:*",
+    "@edu-agent-kit/core": "workspace:*",
+    "@edu-agent-kit/mcp-shared": "workspace:*",
     "zod": "^3.23.8"
   }
 }

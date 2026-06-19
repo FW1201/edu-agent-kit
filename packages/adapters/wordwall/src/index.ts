@@ -1,5 +1,5 @@
 /**
- * @interactive-edtech/wordwall
+ * @edu-agent-kit/wordwall
  *
  * Wordwall adapter. Wordwall has NO content-creation API and every item is
  * entered by hand in the web editor; its only public API is read-only oEmbed.

@@ -1,5 +1,5 @@
 /**
- * @interactive-edtech/core
+ * @edu-agent-kit/core
  *
  * Frozen content-model contract shared by every adapter and the server.
  * Exports: data models (Zod schemas + inferred types), pedagogy helpers

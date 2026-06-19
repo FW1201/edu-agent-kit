@@ -1,4 +1,4 @@
-# interactive-edtech-mcp
+# edu-agent-kit
 
 > An MCP server suite that lets coding agents generate **deep instructional content** from external sources and **operate classroom-interactive EdTech platforms** — Padlet, Google Classroom, Kahoot!, Wayground (Quizizz), Wordwall, and Nearpod.
 
@@ -64,8 +64,8 @@ The native AI features in classroom-interactive tools tend to produce **shallow*
 ### Build from source
 
 ```bash
-git clone https://github.com/FW1201/interactive-edtech-mcp.git
-cd interactive-edtech-mcp
+git clone https://github.com/FW1201/edu-agent-kit.git
+cd edu-agent-kit
 pnpm install
 pnpm build
 ```
@@ -100,7 +100,7 @@ Replace `/ABS/PATH` with the absolute path to your clone. The server speaks stan
 ### Claude Code
 
 ```bash
-claude mcp add interactive-edtech -- node /ABS/PATH/interactive-edtech-mcp/apps/server/dist/index.js
+claude mcp add edu-agent-kit -- node /ABS/PATH/edu-agent-kit/apps/server/dist/index.js
 ```
 
 Or add to `.mcp.json` (project) / `~/.claude.json` (global):
@@ -108,9 +108,9 @@ Or add to `.mcp.json` (project) / `~/.claude.json` (global):
 ```json
 {
   "mcpServers": {
-    "interactive-edtech": {
+    "edu-agent-kit": {
       "command": "node",
-      "args": ["/ABS/PATH/interactive-edtech-mcp/apps/server/dist/index.js"],
+      "args": ["/ABS/PATH/edu-agent-kit/apps/server/dist/index.js"],
       "env": { "PADLET_API_KEY": "...", "TAVILY_API_KEY": "..." }
     }
   }
@@ -126,9 +126,9 @@ Then in a session: `> use content_generate_quiz to draft a deep 8-question quiz 
 ```json
 {
   "mcpServers": {
-    "interactive-edtech": {
+    "edu-agent-kit": {
       "command": "node",
-      "args": ["/ABS/PATH/interactive-edtech-mcp/apps/server/dist/index.js"],
+      "args": ["/ABS/PATH/edu-agent-kit/apps/server/dist/index.js"],
       "env": { "PADLET_API_KEY": "..." }
     }
   }
@@ -142,11 +142,11 @@ Enable it under **Settings → MCP**, then ask the agent in Composer.
 `~/.codex/config.toml`:
 
 ```toml
-[mcp_servers.interactive-edtech]
+[mcp_servers.edu-agent-kit]
 command = "node"
-args = ["/ABS/PATH/interactive-edtech-mcp/apps/server/dist/index.js"]
+args = ["/ABS/PATH/edu-agent-kit/apps/server/dist/index.js"]
 
-[mcp_servers.interactive-edtech.env]
+[mcp_servers.edu-agent-kit.env]
 PADLET_API_KEY = "..."
 TAVILY_API_KEY = "..."
 ```
@@ -161,9 +161,9 @@ Run `codex` and the tools are available to the agent.
 {
   "$schema": "https://opencode.ai/config.json",
   "mcp": {
-    "interactive-edtech": {
+    "edu-agent-kit": {
       "type": "local",
-      "command": ["node", "/ABS/PATH/interactive-edtech-mcp/apps/server/dist/index.js"],
+      "command": ["node", "/ABS/PATH/edu-agent-kit/apps/server/dist/index.js"],
       "environment": { "PADLET_API_KEY": "..." },
       "enabled": true
     }
@@ -178,9 +178,9 @@ In Antigravity, open **MCP settings** (Agent panel → Manage MCP servers → Ed
 ```json
 {
   "mcpServers": {
-    "interactive-edtech": {
+    "edu-agent-kit": {
       "command": "node",
-      "args": ["/ABS/PATH/interactive-edtech-mcp/apps/server/dist/index.js"],
+      "args": ["/ABS/PATH/edu-agent-kit/apps/server/dist/index.js"],
       "env": { "PADLET_API_KEY": "..." }
     }
   }
@@ -237,7 +237,7 @@ The agent calls `content_ingest_source` → `content_generate_quiz` (brief, then
 ## Architecture
 
 ```
-interactive-edtech-mcp/            pnpm monorepo
+edu-agent-kit/            pnpm monorepo
 ├── packages/
 │   ├── core/                      content models (Zod), pedagogy (Bloom/depth), validation
 │   ├── sources/                   file/URL/web ingestion, 108課綱 alignment

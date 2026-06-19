@@ -6,8 +6,8 @@ import {
   errorResult,
   handleApiError,
   type ToolDefinition,
-} from "@interactive-edtech/mcp-shared";
-import { Quiz } from "@interactive-edtech/core";
+} from "@edu-agent-kit/mcp-shared";
+import { Quiz } from "@edu-agent-kit/core";
 import { buildWaygroundWorkbook } from "./workbook.js";
 
 function slugify(s: string): string {

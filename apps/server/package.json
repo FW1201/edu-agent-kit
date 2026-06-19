@@ -1,12 +1,12 @@
 {
-  "name": "interactive-edtech-mcp-server",
+  "name": "edu-agent-kit-server",
   "version": "0.1.0",
-  "description": "Single MCP server exposing content-generation, classroom-platform, and end-to-end workflow tools for interactive-edtech-mcp.",
+  "description": "Single MCP server exposing content-generation, classroom-platform, and end-to-end workflow tools for edu-agent-kit.",
   "type": "module",
   "license": "MIT",
   "main": "dist/index.js",
   "bin": {
-    "interactive-edtech-mcp": "dist/index.js"
+    "edu-agent-kit-server": "dist/index.js"
   },
   "scripts": {
     "build": "tsc",
@@ -16,15 +16,15 @@
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
-    "@interactive-edtech/core": "workspace:*",
-    "@interactive-edtech/mcp-shared": "workspace:*",
-    "@interactive-edtech/sources": "workspace:*",
-    "@interactive-edtech/padlet": "workspace:*",
-    "@interactive-edtech/google-classroom": "workspace:*",
-    "@interactive-edtech/kahoot": "workspace:*",
-    "@interactive-edtech/wayground": "workspace:*",
-    "@interactive-edtech/wordwall": "workspace:*",
-    "@interactive-edtech/nearpod": "workspace:*",
+    "@edu-agent-kit/core": "workspace:*",
+    "@edu-agent-kit/mcp-shared": "workspace:*",
+    "@edu-agent-kit/sources": "workspace:*",
+    "@edu-agent-kit/padlet": "workspace:*",
+    "@edu-agent-kit/google-classroom": "workspace:*",
+    "@edu-agent-kit/kahoot": "workspace:*",
+    "@edu-agent-kit/wayground": "workspace:*",
+    "@edu-agent-kit/wordwall": "workspace:*",
+    "@edu-agent-kit/nearpod": "workspace:*",
     "@modelcontextprotocol/sdk": "^1.12.0",
     "express": "^4.21.2",
     "zod": "^3.23.8"

@@ -1,5 +1,5 @@
 /**
- * @interactive-edtech/mcp-shared
+ * @edu-agent-kit/mcp-shared
  *
  * Shared MCP plumbing used by every adapter and the server: the ToolDefinition
  * contract, response formatting/pagination, error handling, HTTP client, and

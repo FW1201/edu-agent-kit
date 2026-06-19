@@ -1,15 +1,15 @@
 {
-  "name": "interactive-edtech-mcp",
+  "name": "edu-agent-kit",
   "version": "0.1.0",
   "private": true,
   "description": "An MCP server suite that lets coding agents generate deep instructional content from external sources and operate classroom-interactive EdTech platforms (Padlet, Google Classroom, Kahoot, Wayground/Quizizz, Wordwall, Nearpod).",
   "type": "module",
   "license": "MIT",
   "author": "Kevin Wu (FW1201)",
-  "homepage": "https://github.com/FW1201/interactive-edtech-mcp",
+  "homepage": "https://github.com/FW1201/edu-agent-kit",
   "repository": {
     "type": "git",
-    "url": "https://github.com/FW1201/interactive-edtech-mcp.git"
+    "url": "https://github.com/FW1201/edu-agent-kit.git"
   },
   "engines": {
     "node": ">=18"

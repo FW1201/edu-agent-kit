@@ -1,5 +1,5 @@
 /**
- * @interactive-edtech/google-classroom
+ * @edu-agent-kit/google-classroom
  *
  * Google Classroom adapter — official API via googleapis + OAuth2. Exposes the
  * MCP tool array plus a few high-level helpers the server's workflow tool calls
@@ -9,7 +9,7 @@ import type { classroom_v1 } from "googleapis";
 import { getClassroom } from "./auth.js";
 import { buildCourseWorkBody, buildMaterials, type CourseWorkInput } from "./builders.js";
 import { tools } from "./tools.js";
-import type { ToolDefinition } from "@interactive-edtech/mcp-shared";
+import type { ToolDefinition } from "@edu-agent-kit/mcp-shared";
 
 /** All Google Classroom MCP tools, ready for the server to register. */
 export const googleClassroomTools: ToolDefinition[] = tools;

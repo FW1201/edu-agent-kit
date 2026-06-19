@@ -1,4 +1,4 @@
-import type { CurriculumAlignment } from "@interactive-edtech/core";
+import type { CurriculumAlignment } from "@edu-agent-kit/core";
 
 /**
  * Seed dataset of Taiwan 108 課綱 領域 core competencies (核心素養).

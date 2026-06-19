@@ -1,5 +1,5 @@
 {
-  "name": "@interactive-edtech/google-classroom",
+  "name": "@edu-agent-kit/google-classroom",
   "version": "0.1.0",
   "description": "Google Classroom adapter — official API (courses, coursework, materials, announcements, roster, submissions, grading) via googleapis + OAuth2.",
   "type": "module",
@@ -14,8 +14,8 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@interactive-edtech/core": "workspace:*",
-    "@interactive-edtech/mcp-shared": "workspace:*",
+    "@edu-agent-kit/core": "workspace:*",
+    "@edu-agent-kit/mcp-shared": "workspace:*",
     "googleapis": "^144.0.0",
     "zod": "^3.23.8"
   }

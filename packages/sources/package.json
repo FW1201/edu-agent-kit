@@ -1,5 +1,5 @@
 {
-  "name": "@interactive-edtech/sources",
+  "name": "@edu-agent-kit/sources",
   "version": "0.1.0",
   "description": "External-resource ingestion: file parsing (PDF/DOCX/TXT/MD), URL/web-search retrieval, and 108課綱 curriculum alignment — producing SourceMaterial for the generation layer.",
   "type": "module",
@@ -19,8 +19,8 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@interactive-edtech/core": "workspace:*",
-    "@interactive-edtech/mcp-shared": "workspace:*",
+    "@edu-agent-kit/core": "workspace:*",
+    "@edu-agent-kit/mcp-shared": "workspace:*",
     "mammoth": "^1.8.0",
     "node-html-parser": "^6.1.13",
     "unpdf": "^0.12.1",

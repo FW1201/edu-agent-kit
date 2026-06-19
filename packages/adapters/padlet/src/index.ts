@@ -1,5 +1,5 @@
 /**
- * @interactive-edtech/padlet
+ * @edu-agent-kit/padlet
  *
  * Padlet adapter — official REST API (https://api.padlet.dev/v1).
  * Exposes MCP tools plus reusable client functions.
@@ -9,7 +9,7 @@
  * creation, and AI-board creation are fully supported.
  */
 
-import type { ToolDefinition } from "@interactive-edtech/mcp-shared";
+import type { ToolDefinition } from "@edu-agent-kit/mcp-shared";
 import { padletToolList } from "./tools.js";
 
 /** The full set of Padlet MCP tools for the server to register. */

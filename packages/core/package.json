@@ -1,7 +1,7 @@
 {
-  "name": "@interactive-edtech/core",
+  "name": "@edu-agent-kit/core",
   "version": "0.1.0",
-  "description": "Shared content data models (quiz/lesson/board), pedagogy helpers, and validation for interactive-edtech-mcp.",
+  "description": "Shared content data models (quiz/lesson/board), pedagogy helpers, and validation for edu-agent-kit.",
   "type": "module",
   "license": "MIT",
   "main": "dist/index.js",

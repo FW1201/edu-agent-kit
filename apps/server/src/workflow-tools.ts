@@ -7,14 +7,14 @@ import {
   errorResult,
   handleApiError,
   type ToolDefinition,
-} from "@interactive-edtech/mcp-shared";
-import { Quiz, Lesson, Board } from "@interactive-edtech/core";
-import { createAiBoardAndWait, addPost } from "@interactive-edtech/padlet";
-import { buildKahootWorkbook } from "@interactive-edtech/kahoot";
-import { buildWaygroundWorkbook } from "@interactive-edtech/wayground";
-import { buildWordwallContent } from "@interactive-edtech/wordwall";
-import { buildNearpodPptx } from "@interactive-edtech/nearpod";
-import { createCoursework } from "@interactive-edtech/google-classroom";
+} from "@edu-agent-kit/mcp-shared";
+import { Quiz, Lesson, Board } from "@edu-agent-kit/core";
+import { createAiBoardAndWait, addPost } from "@edu-agent-kit/padlet";
+import { buildKahootWorkbook } from "@edu-agent-kit/kahoot";
+import { buildWaygroundWorkbook } from "@edu-agent-kit/wayground";
+import { buildWordwallContent } from "@edu-agent-kit/wordwall";
+import { buildNearpodPptx } from "@edu-agent-kit/nearpod";
+import { createCoursework } from "@edu-agent-kit/google-classroom";
 
 function slugify(s: string): string {
   return (

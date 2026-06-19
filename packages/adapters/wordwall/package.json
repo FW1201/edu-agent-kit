@@ -1,5 +1,5 @@
 {
-  "name": "@interactive-edtech/wordwall",
+  "name": "@edu-agent-kit/wordwall",
   "version": "0.1.0",
   "description": "Wordwall adapter — generate template-mapped activity content files (create) and read published activities via oEmbed.",
   "type": "module",
@@ -14,8 +14,8 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@interactive-edtech/core": "workspace:*",
-    "@interactive-edtech/mcp-shared": "workspace:*",
+    "@edu-agent-kit/core": "workspace:*",
+    "@edu-agent-kit/mcp-shared": "workspace:*",
     "zod": "^3.23.8"
   }
 }

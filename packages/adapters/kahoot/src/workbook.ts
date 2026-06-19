@@ -1,7 +1,7 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import ExcelJS from "exceljs";
-import type { Quiz, Question } from "@interactive-edtech/core";
+import type { Quiz, Question } from "@edu-agent-kit/core";
 
 // Kahoot spreadsheet-import constraints (per Kahoot's official template).
 export const QUESTION_MAX = 120;
@@ -124,7 +124,7 @@ export async function buildKahootWorkbook(
   );
 
   const wb = new ExcelJS.Workbook();
-  wb.creator = "interactive-edtech-mcp";
+  wb.creator = "edu-agent-kit";
   const ws = wb.addWorksheet("Kahoot");
 
   // Instruction rows (rows 1-7) mirror the official template's guidance area.

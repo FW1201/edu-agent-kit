@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { buildWordwallContent } from "./content.js";
-import type { Quiz } from "@interactive-edtech/core";
+import type { Quiz } from "@edu-agent-kit/core";
 
 const quiz: Quiz = {
   title: "Vocabulary",

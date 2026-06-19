@@ -1,7 +1,7 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import { ToolError } from "@interactive-edtech/mcp-shared";
-import type { SourceMaterial } from "@interactive-edtech/core";
+import { ToolError } from "@edu-agent-kit/mcp-shared";
+import type { SourceMaterial } from "@edu-agent-kit/core";
 
 function makeId(prefix: string): string {
   return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;

@@ -14,7 +14,7 @@ import {
   BoardPost,
   ResponseFormat,
   ResponseFormatSchema,
-} from "@interactive-edtech/core";
+} from "@edu-agent-kit/core";
 import {
   defineTool,
   type ToolDefinition,
@@ -23,7 +23,7 @@ import {
   handleApiError,
   paginate,
   objectToMarkdown,
-} from "@interactive-edtech/mcp-shared";
+} from "@edu-agent-kit/mcp-shared";
 import {
   getBoard,
   listPosts,

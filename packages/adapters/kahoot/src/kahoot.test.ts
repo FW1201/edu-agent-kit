@@ -5,7 +5,7 @@ import os from "node:os";
 import ExcelJS from "exceljs";
 import { buildKahootWorkbook, QUESTION_MAX } from "./workbook.js";
 import { analyzeReport } from "./reports.js";
-import type { Quiz } from "@interactive-edtech/core";
+import type { Quiz } from "@edu-agent-kit/core";
 
 const tmpDir = path.join(os.tmpdir(), `kahoot-test-${Date.now()}`);
 

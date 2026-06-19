@@ -1,4 +1,4 @@
-import { httpRequest, requireEnv } from "@interactive-edtech/mcp-shared";
+import { httpRequest, requireEnv } from "@edu-agent-kit/mcp-shared";
 
 /**
  * Kahoot Reports API base. The Reports API is read-only and requires a Kahoot

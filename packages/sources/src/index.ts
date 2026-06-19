@@ -1,5 +1,5 @@
 /**
- * @interactive-edtech/sources
+ * @edu-agent-kit/sources
  *
  * External-resource ingestion (the "外部資源容納" layer): turn files, URLs,
  * web-search results, and curriculum standards into SourceMaterial / alignment

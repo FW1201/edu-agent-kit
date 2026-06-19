@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { buildPostPayload } from "./client.js";
-import type { BoardPost } from "@interactive-edtech/core";
+import type { BoardPost } from "@edu-agent-kit/core";
 
 describe("buildPostPayload", () => {
   it("maps subject, body, color, and section", () => {

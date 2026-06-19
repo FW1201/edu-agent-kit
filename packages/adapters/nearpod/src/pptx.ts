@@ -1,7 +1,7 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import PptxGenJSImport from "pptxgenjs";
-import type { Lesson, Slide } from "@interactive-edtech/core";
+import type { Lesson, Slide } from "@edu-agent-kit/core";
 
 // pptxgenjs ships a class+namespace default export that Node16 module resolution
 // neither treats as constructable nor usable as a type. The runtime value IS the

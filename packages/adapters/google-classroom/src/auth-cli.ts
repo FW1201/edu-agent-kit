@@ -14,7 +14,7 @@
 import http from "node:http";
 import { URL } from "node:url";
 import { createOAuthClient, getTokenStore, SCOPES, DEFAULT_REDIRECT_URI } from "./auth.js";
-import { optionalEnv } from "@interactive-edtech/mcp-shared";
+import { optionalEnv } from "@edu-agent-kit/mcp-shared";
 
 function redirectInfo(): { redirectUri: string; host: string; port: number; pathname: string } {
   const redirectUri = optionalEnv("GOOGLE_REDIRECT_URI") ?? DEFAULT_REDIRECT_URI;

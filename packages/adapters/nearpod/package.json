@@ -1,5 +1,5 @@
 {
-  "name": "@interactive-edtech/nearpod",
+  "name": "@edu-agent-kit/nearpod",
   "version": "0.1.0",
   "description": "Nearpod adapter — generate a Google Slides-compatible .pptx lesson export (create) for import into Nearpod via Google Slides.",
   "type": "module",
@@ -14,8 +14,8 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@interactive-edtech/core": "workspace:*",
-    "@interactive-edtech/mcp-shared": "workspace:*",
+    "@edu-agent-kit/core": "workspace:*",
+    "@edu-agent-kit/mcp-shared": "workspace:*",
     "pptxgenjs": "^3.12.0",
     "zod": "^3.23.8"
   }

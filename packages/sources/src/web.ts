@@ -4,8 +4,8 @@ import {
   ToolError,
   optionalEnv,
   MissingCredentialError,
-} from "@interactive-edtech/mcp-shared";
-import type { SourceMaterial } from "@interactive-edtech/core";
+} from "@edu-agent-kit/mcp-shared";
+import type { SourceMaterial } from "@edu-agent-kit/core";
 
 function makeId(prefix: string): string {
   return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
