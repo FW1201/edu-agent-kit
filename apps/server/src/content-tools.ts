@@ -4,6 +4,7 @@ import {
   dualResult,
   errorResult,
   textResult,
+  imageResult,
   handleApiError,
   type ToolDefinition,
 } from "@edu-agent-kit/mcp-shared";
@@ -17,7 +18,7 @@ import {
   scoreDepth,
   SourceMaterial,
 } from "@edu-agent-kit/core";
-import { ingestFile, ingestUrl, ingestFolder, alignCurriculum } from "@edu-agent-kit/sources";
+import { ingestFile, ingestUrl, ingestFolder, loadImage, alignCurriculum } from "@edu-agent-kit/sources";
 
 function parseSources(input: unknown): SourceMaterial[] {
   const parsed = z.array(SourceMaterial).safeParse(input ?? []);
@@ -56,6 +57,36 @@ Returns (structuredContent): a SourceMaterial { id, origin, title?, text, citati
       return dualResult(
         `# Ingested: ${material.title ?? material.id}\n\n- **Origin:** ${material.origin}\n- **Chars:** ${material.text.length}\n\n## Preview\n${preview}…`,
         material,
+      );
+    } catch (err) {
+      return errorResult(handleApiError(err, "Sources"));
+    }
+  },
+});
+
+const IngestImageInput = z
+  .object({
+    path: z.string().min(1).describe("Local image file (.png/.jpg/.jpeg/.gif/.webp)."),
+  })
+  .strict();
+
+export const ingestImageTool = defineTool({
+  name: "content_ingest_image",
+  title: "Ingest an Image (handwriting / 講義照片)",
+  description: `Load an image (講義照片, 手寫稿, 黑板) and hand it to YOU (the agent) to transcribe/summarize with your built-in vision — no external OCR API needed. Best for handwriting.
+
+Args: path (string) — a local image file.
+Returns: an image content block + an instruction. After you read it, organize the transcription into the knowledge base (or pass as a source to content_generate_*).`,
+  inputSchema: IngestImageInput,
+  annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: false, openWorldHint: false },
+  handler: async (args) => {
+    try {
+      const img = await loadImage(args.path);
+      return imageResult(
+        img.base64,
+        img.mimeType,
+        `以下是圖片「${img.title}」。請用你的視覺能力把內容（含手寫）轉寫成文字，必要時摘要重點，整理成可加入知識庫或作為生成素材的內容。`,
+        { title: img.title, mimeType: img.mimeType, locator: args.path },
       );
     } catch (err) {
       return errorResult(handleApiError(err, "Sources"));
@@ -296,6 +327,7 @@ Returns: brief (text) on step 1; structuredContent { board, warnings } on step 2
 
 export const contentTools: ToolDefinition[] = [
   ingestSourceTool,
+  ingestImageTool,
   ingestFolderTool,
   alignCurriculumTool,
   generateQuizTool,

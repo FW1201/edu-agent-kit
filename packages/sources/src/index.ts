@@ -8,6 +8,7 @@
  */
 export { ingestFile, ingestFolder, SUPPORTED_EXTS, type FolderIngestResult } from "./files.js";
 export { ingestUrl } from "./web.js";
+export { loadImage, IMAGE_EXTS, type LoadedImage } from "./images.js";
 export {
   alignCurriculum,
   listCurriculumDomains,
