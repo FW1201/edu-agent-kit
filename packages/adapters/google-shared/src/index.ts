@@ -11,6 +11,8 @@ export {
   getTokenStore,
   tokenStorePath,
   runAuthFlow,
+  logout,
+  isLoggedIn,
   DEFAULT_REDIRECT_URI,
   type OAuth2Client,
   type Credentials,

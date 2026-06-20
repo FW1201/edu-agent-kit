@@ -20,7 +20,7 @@
  * conjure a blank board.
  */
 
-import { httpRequest, requireEnv } from "@edu-agent-kit/mcp-shared";
+import { httpRequest, resolveCredential, MissingCredentialError } from "@edu-agent-kit/mcp-shared";
 import type { BoardPost } from "@edu-agent-kit/core";
 
 /** Base URL for the Padlet API (v1). */
@@ -29,17 +29,21 @@ export const PADLET_BASE_URL = "https://api.padlet.dev/v1";
 /** JSON:API content type required by Padlet write endpoints. */
 const JSON_API_CONTENT_TYPE = "application/vnd.api+json";
 
-/** Read the API key from the environment (throws an actionable error if missing). */
-function apiKey(): string {
-  return requireEnv(
-    "PADLET_API_KEY",
-    "Generate at https://padlet.com/dashboard/settings/developers",
-  );
+/** Read the API key (env PADLET_API_KEY → credential store). Throws if missing. */
+async function apiKey(): Promise<string> {
+  const key = await resolveCredential("PADLET_API_KEY", "padlet", "apiKey");
+  if (!key) {
+    throw new MissingCredentialError(
+      "PADLET_API_KEY",
+      "Run `edu-agent-kit auth login padlet`, or set PADLET_API_KEY. Key page: https://padlet.com/dashboard/settings/developers",
+    );
+  }
+  return key;
 }
 
 /** Standard headers for every request (the X-API-KEY is centralized here). */
-function headers(write = false): Record<string, string> {
-  const h: Record<string, string> = { "X-API-KEY": apiKey() };
+async function headers(write = false): Promise<Record<string, string>> {
+  const h: Record<string, string> = { "X-API-KEY": await apiKey() };
   if (write) h["Content-Type"] = JSON_API_CONTENT_TYPE;
   return h;
 }
@@ -220,10 +224,10 @@ export interface ListOptions {
 }
 
 /** Fetch a board (with posts, sections and comments included). */
-export function getBoard(boardId: string): Promise<GetBoardResponse> {
+export async function getBoard(boardId: string): Promise<GetBoardResponse> {
   return httpRequest<GetBoardResponse>(`${PADLET_BASE_URL}/boards/${boardId}`, {
     method: "GET",
-    headers: headers(),
+    headers: await headers(),
     query: { include: "posts,sections,comments" },
   });
 }
@@ -267,14 +271,14 @@ export interface CreateAiBoardParams {
  * poll. Use {@link pollAiBoardStatus} (or {@link createAiBoardAndWait}) to wait
  * for completion.
  */
-export function createAiBoard(
+export async function createAiBoard(
   params: CreateAiBoardParams,
 ): Promise<CreateAiBoardResponse> {
   return httpRequest<CreateAiBoardResponse>(
     `${PADLET_BASE_URL}/ai-recipe-boards`,
     {
       method: "POST",
-      headers: headers(true),
+      headers: await headers(true),
       json: {
         data: {
           type: "ai_recipe_board",
@@ -295,12 +299,12 @@ export function createAiBoard(
  * Poll an AI-board status URL once. The URL is the absolute `statusUrl` returned
  * by {@link createAiBoard}; it is requested as-is (already includes the host).
  */
-export function pollAiBoardStatus(
+export async function pollAiBoardStatus(
   statusUrl: string,
 ): Promise<AiBoardStatusResponse> {
   return httpRequest<AiBoardStatusResponse>(statusUrl, {
     method: "GET",
-    headers: headers(),
+    headers: await headers(),
   });
 }
 
@@ -354,7 +358,7 @@ export async function createAiBoardAndWait(
 }
 
 /** Add a single post to a board, mapping the core BoardPost via buildPostPayload. */
-export function addPost(
+export async function addPost(
   boardId: string,
   post: BoardPost,
 ): Promise<AddPostResponse> {
@@ -362,7 +366,7 @@ export function addPost(
     `${PADLET_BASE_URL}/boards/${boardId}/posts`,
     {
       method: "POST",
-      headers: headers(true),
+      headers: await headers(true),
       json: buildPostPayload(post),
     },
   );

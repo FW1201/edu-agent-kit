@@ -1,19 +1,27 @@
 /**
  * Shared Google OAuth2 plumbing used by every Google adapter.
  *
- * Credentials come from env (GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET); the
- * refresh/access token is persisted by a JsonTokenStore and created once by the
- * consent flow (`runAuthFlow`, exposed via the CLI `auth google`).
+ * Auth UX goal: `edu-agent-kit auth login` opens the browser once and the user
+ * stays logged in until `auth logout`. Client credentials resolve in this order:
+ *   1. GOOGLE_CLIENT_ID + GOOGLE_CLIENT_SECRET (env)
+ *   2. a client_secret.json (GOOGLE_CLIENT_SECRET_FILE env, or a bundled default)
+ * For API calls the authorized client resolves in this order:
+ *   1. stored OAuth token (from the login flow)
+ *   2. service account / ADC (GOOGLE_APPLICATION_CREDENTIALS or gcloud ADC) — for schools
  */
+import { promises as fs } from "node:fs";
+import { readFileSync } from "node:fs";
+import path from "node:path";
 import http from "node:http";
-import { URL } from "node:url";
+import { fileURLToPath, URL } from "node:url";
 import { google, type Auth } from "googleapis";
 import {
   JsonTokenStore,
   optionalEnv,
-  requireEnv,
   MissingCredentialError,
+  openBrowser,
 } from "@edu-agent-kit/mcp-shared";
+import { scopesFor } from "./scopes.js";
 
 export type OAuth2Client = Auth.OAuth2Client;
 export type Credentials = Auth.Credentials;
@@ -21,56 +29,122 @@ export type Credentials = Auth.Credentials;
 /** Default redirect URI used by both the OAuth client and the consent server. */
 export const DEFAULT_REDIRECT_URI = "http://localhost:3000/oauth2callback";
 
-/** Resolve the token-store path from env (or a sensible default). */
 export function tokenStorePath(): string {
   return optionalEnv("GOOGLE_TOKEN_PATH") ?? `${process.cwd()}/.tokens/google-token.json`;
 }
 
-/** A JsonTokenStore typed for Google OAuth credentials. */
 export function getTokenStore(): JsonTokenStore<Credentials> {
   return new JsonTokenStore<Credentials>(tokenStorePath());
 }
 
-/** Construct an OAuth2 client from env (no token loaded). */
-export function createOAuthClient(): OAuth2Client {
-  const clientId = requireEnv(
+interface ClientCreds {
+  clientId: string;
+  clientSecret: string;
+}
+
+/** Parse a Google client_secret.json ({installed|web:{client_id,client_secret}}). */
+function parseClientSecretJson(raw: string): ClientCreds | undefined {
+  try {
+    const j = JSON.parse(raw) as Record<string, { client_id?: string; client_secret?: string }>;
+    const node = j.installed ?? j.web;
+    if (node?.client_id && node?.client_secret) {
+      return { clientId: node.client_id, clientSecret: node.client_secret };
+    }
+  } catch {
+    /* ignore */
+  }
+  return undefined;
+}
+
+/**
+ * Resolve OAuth client credentials. A bundled default client (shipped by the
+ * project so teachers need no Cloud Console) is used if present; env always wins.
+ */
+function resolveClientCreds(): ClientCreds {
+  const envId = optionalEnv("GOOGLE_CLIENT_ID");
+  const envSecret = optionalEnv("GOOGLE_CLIENT_SECRET");
+  if (envId && envSecret) return { clientId: envId, clientSecret: envSecret };
+
+  // A downloaded client_secret.json (env path or bundled default).
+  const here = path.dirname(fileURLToPath(import.meta.url));
+  const candidates = [
+    optionalEnv("GOOGLE_CLIENT_SECRET_FILE"),
+    // bundled default shipped with the package (maintainer-provided, see docs)
+    path.join(here, "..", "default-google-client.json"),
+    path.join(here, "default-google-client.json"),
+  ].filter((p): p is string => typeof p === "string" && p.length > 0);
+  for (const file of candidates) {
+    try {
+      const creds = parseClientSecretJson(readFileSync(file, "utf8"));
+      if (creds) return creds;
+    } catch {
+      /* try next */
+    }
+  }
+  throw new MissingCredentialError(
     "GOOGLE_CLIENT_ID",
-    "Create an OAuth client (Desktop) in Google Cloud Console with the needed APIs enabled.",
+    "No Google OAuth client configured. Either the bundled default client is missing, or set GOOGLE_CLIENT_ID/GOOGLE_CLIENT_SECRET (or GOOGLE_CLIENT_SECRET_FILE to a downloaded client_secret.json). See docs/API-SETUP.md.",
   );
-  const clientSecret = requireEnv(
-    "GOOGLE_CLIENT_SECRET",
-    "Copy the client secret from the same OAuth client.",
-  );
+}
+
+/** Construct an OAuth2 client (no token loaded). */
+export function createOAuthClient(): OAuth2Client {
+  const { clientId, clientSecret } = resolveClientCreds();
   const redirectUri = optionalEnv("GOOGLE_REDIRECT_URI") ?? DEFAULT_REDIRECT_URI;
   return new google.auth.OAuth2(clientId, clientSecret, redirectUri);
 }
 
 /**
- * Build an authenticated OAuth2 client: loads the persisted token, applies it,
- * and persists refreshed tokens. Throws MissingCredentialError if no token is
- * stored yet. Use the returned client with any `google.<api>({ auth })`.
+ * Build an authenticated client for API calls. Prefers the stored OAuth token
+ * (interactive login); falls back to service account / ADC for institutions.
  */
 export async function getAuthorizedClient(): Promise<OAuth2Client> {
-  const auth = createOAuthClient();
   const store = getTokenStore();
   const token = await store.read();
-  if (!token || (!token.access_token && !token.refresh_token)) {
+  if (token && (token.access_token || token.refresh_token)) {
+    const auth = createOAuthClient();
+    auth.setCredentials(token);
+    auth.on("tokens", (refreshed: Credentials) => {
+      void (async () => {
+        try {
+          await store.write({ ...token, ...refreshed });
+        } catch {
+          /* best-effort */
+        }
+      })();
+    });
+    return auth;
+  }
+
+  // Fallback: service account (GOOGLE_APPLICATION_CREDENTIALS) or gcloud ADC.
+  // The ADC client is structurally compatible with the Google API factories
+  // for making calls; cast to keep adapter call sites typed as OAuth2Client.
+  try {
+    const googleAuth = new google.auth.GoogleAuth({ scopes: scopesFor() });
+    return (await googleAuth.getClient()) as unknown as OAuth2Client;
+  } catch {
     throw new MissingCredentialError(
       "GOOGLE_TOKEN",
-      "Authorize first: run `edu-agent-kit auth google` (or the adapter's auth-cli).",
+      "Not authorized. Run `edu-agent-kit auth login` (opens your browser, one-time). Schools can instead set GOOGLE_APPLICATION_CREDENTIALS to a service-account key.",
     );
   }
-  auth.setCredentials(token);
-  auth.on("tokens", (refreshed: Credentials) => {
-    void (async () => {
-      try {
-        await store.write({ ...token, ...refreshed });
-      } catch {
-        // Best-effort persistence; a failed write must not break the API call.
-      }
-    })();
-  });
-  return auth;
+}
+
+/** Whether a login token is currently stored. */
+export async function isLoggedIn(): Promise<boolean> {
+  const token = await getTokenStore().read();
+  return Boolean(token && (token.access_token || token.refresh_token));
+}
+
+/** Delete the stored Google token (logout). Returns true if a token was removed. */
+export async function logout(): Promise<boolean> {
+  const p = tokenStorePath();
+  try {
+    await fs.unlink(p);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 function redirectInfo(): { port: number; pathname: string } {
@@ -81,12 +155,12 @@ function redirectInfo(): { port: number; pathname: string } {
 }
 
 /**
- * Run the one-time consent flow for the given scopes: prints a consent URL,
- * starts a local server on the redirect port, captures the code, exchanges it
- * for tokens, and persists them. Returns the obtained credentials.
+ * Run the one-time consent flow for the given scopes (default: all services):
+ * builds the consent URL, AUTO-OPENS the browser (prints URL as fallback),
+ * captures the redirect code, exchanges it for tokens, and persists them.
  */
 export async function runAuthFlow(
-  scopes: string[],
+  scopes: string[] = scopesFor(),
   log: (msg: string) => void = (m) => process.stdout.write(m),
 ): Promise<Credentials> {
   const oauth = createOAuthClient();
@@ -98,10 +172,11 @@ export async function runAuthFlow(
     scope: scopes,
   });
 
-  log("\nGoogle authorization\n");
-  log("Open this URL in your browser and grant access:\n\n");
+  log("\nGoogle 授權 / authorization — opening your browser…\n");
+  log("If it doesn't open, paste this URL manually:\n\n");
   log(`  ${consentUrl}\n\n`);
-  log(`Waiting for the redirect on port ${port}...\n`);
+  openBrowser(consentUrl);
+  log(`Waiting for the redirect on port ${port}…\n`);
 
   const code = await new Promise<string>((resolve, reject) => {
     const server = http.createServer((req, res) => {
@@ -128,7 +203,7 @@ export async function runAuthFlow(
           return;
         }
         res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" }).end(
-          "<html><body><h2>Authorized.</h2><p>You can close this tab and return to the terminal.</p></body></html>",
+          "<html><body style='font-family:sans-serif'><h2>✅ 已授權，可以關閉此分頁回到終端機。</h2></body></html>",
         );
         server.close();
         resolve(authCode);
@@ -149,6 +224,6 @@ export async function runAuthFlow(
     );
   }
   await getTokenStore().write(tokens);
-  log("\nTokens saved. Setup complete.\n");
+  log("\n✅ 登入完成，已永久保存（除非執行 auth logout）。\n");
   return tokens;
 }

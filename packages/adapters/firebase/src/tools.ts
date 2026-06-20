@@ -6,7 +6,7 @@ import {
   dualResult,
   errorResult,
   handleApiError,
-  optionalEnv,
+  resolveCredential,
   MissingCredentialError,
   type ToolDefinition,
 } from "@edu-agent-kit/mcp-shared";
@@ -41,18 +41,19 @@ Error handling: returns a credential error if FIREBASE_TOKEN or the project id i
   inputSchema: DeployInput,
   annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: true },
   handler: async (args) => {
-    const projectId = args.projectId ?? optionalEnv("FIREBASE_PROJECT");
-    const token = optionalEnv("FIREBASE_TOKEN");
+    const projectId =
+      args.projectId ?? (await resolveCredential("FIREBASE_PROJECT", "firebase", "project"));
+    const token = await resolveCredential("FIREBASE_TOKEN", "firebase", "token");
     if (!projectId) {
       return errorResult(
-        "Missing Firebase project id: pass projectId or set FIREBASE_PROJECT.",
+        "Missing Firebase project id: pass projectId, set FIREBASE_PROJECT, or run `edu-agent-kit auth login firebase`.",
       );
     }
     if (!token) {
       return errorResult(
         new MissingCredentialError(
           "FIREBASE_TOKEN",
-          "Get a token with `firebase login:ci` (install: npm i -g firebase-tools).",
+          "Run `edu-agent-kit auth login firebase`, or get a token with `firebase login:ci`.",
         ).message,
       );
     }

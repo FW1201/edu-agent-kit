@@ -1,4 +1,4 @@
-import { httpRequest, requireEnv } from "@edu-agent-kit/mcp-shared";
+import { httpRequest, resolveCredential, MissingCredentialError } from "@edu-agent-kit/mcp-shared";
 
 /**
  * Kahoot Reports API base. The Reports API is read-only and requires a Kahoot
@@ -8,18 +8,21 @@ import { httpRequest, requireEnv } from "@edu-agent-kit/mcp-shared";
  */
 export const KAHOOT_RESULTS_BASE = "https://results.kahoot.com";
 
-function authHeader(): Record<string, string> {
-  const key = requireEnv(
-    "KAHOOT_API_KEY",
-    "The Kahoot Reports API requires an EDU/enterprise plan token.",
-  );
+async function authHeader(): Promise<Record<string, string>> {
+  const key = await resolveCredential("KAHOOT_API_KEY", "kahoot", "apiKey");
+  if (!key) {
+    throw new MissingCredentialError(
+      "KAHOOT_API_KEY",
+      "Run `edu-agent-kit auth login kahoot`, or set KAHOOT_API_KEY (EDU/enterprise plan).",
+    );
+  }
   return { Authorization: `Bearer ${key}` };
 }
 
 /** Fetch the list of available report summaries (most recent games). */
 export async function listReports(limit = 20): Promise<unknown> {
   return httpRequest(`${KAHOOT_RESULTS_BASE}/rest/reports/list`, {
-    headers: authHeader(),
+    headers: await authHeader(),
     query: { limit },
   });
 }
@@ -28,7 +31,7 @@ export async function listReports(limit = 20): Promise<unknown> {
 export async function getReport(reportId: string): Promise<unknown> {
   return httpRequest(
     `${KAHOOT_RESULTS_BASE}/rest/reports/${encodeURIComponent(reportId)}`,
-    { headers: authHeader() },
+    { headers: await authHeader() },
   );
 }
 
