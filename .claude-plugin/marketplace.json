@@ -12,7 +12,7 @@
       "name": "edu-agent-kit",
       "source": "./",
       "description": "教育工作者的 agent 知識庫與工具組（LLM-wiki scaffolder + 內容生成 + 課堂平台/Google/Firebase 輸出）。包含 5 個教師 Skills 與 43-tool MCP server。",
-      "version": "0.2.1"
+      "version": "0.3.0"
     }
   ]
 }

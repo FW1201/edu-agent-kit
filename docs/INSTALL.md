@@ -25,7 +25,7 @@ pnpm build
 驗證：
 
 ```bash
-node apps/server/dist/index.js   # 應印出 "edu-agent-kit-server vX running on stdio (43 tools)"，Ctrl+C 結束
+node apps/server/dist/index.js   # 應印出 "edu-agent-kit-server vX running on stdio (51 tools)"，Ctrl+C 結束
 node apps/cli/dist/index.js doctor
 ```
 
@@ -44,7 +44,7 @@ cp .env.example .env
 各金鑰申請步驟見 [API-SETUP.md](API-SETUP.md)。Google 第一次需授權：
 
 ```bash
-node apps/cli/dist/index.js auth google --services docs,slides,forms,sheets,drive,classroom
+node apps/cli/dist/index.js auth login
 ```
 
 會印出同意畫面網址；在瀏覽器登入授權後，token 會寫入 `.tokens/google-token.json`（已被 `.gitignore` 排除，請勿提交）。
@@ -137,7 +137,7 @@ GOOGLE_CLIENT_SECRET = "..."
   }
 }
 ```
-重新載入 server，44 個工具即可使用。
+重新載入 server，51 個工具即可使用。
 
 ### 4.6 遠端 / 多人共用（HTTP）
 ```bash
@@ -176,6 +176,6 @@ node apps/cli/dist/index.js init --dir ~/我的教學wiki --template workflow \
 - **`pnpm: command not found`** → `corepack enable pnpm`
 - **build 失敗** → 確認 Node ≥ 18；`pnpm install` 後重試 `pnpm build`
 - **工具回「Missing credential」** → 該功能需金鑰；見 [API-SETUP.md](API-SETUP.md)，或先用不需金鑰的功能（生成 brief、產匯入檔、wiki scaffold）
-- **Google 授權失敗 / 無 refresh token** → 到 https://myaccount.google.com/permissions 撤銷後重跑 `auth google`
+- **Google 授權失敗 / 無 refresh token** → 到 https://myaccount.google.com/permissions 撤銷後重跑 `auth login`
 - **plugin 載入但工具沒出現** → 確認已在 plugin 目錄 `pnpm install && pnpm build`；用 `/reload-plugins`
 - **檢查整體狀態** → `node apps/cli/dist/index.js doctor`

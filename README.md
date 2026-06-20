@@ -16,14 +16,14 @@ Works with **Claude Code, Cursor, Codex, OpenCode, Antigravity**, and any MCP cl
 Native AI features in classroom tools produce shallow content, don't connect to agent workflows, and can't ingest your own materials. edu-agent-kit solves this end to end:
 
 1. **Local LLM-wiki** — scaffold a knowledge base for your teaching materials (templated folders, agent memory/`CLAUDE.md`, dispatch commands), so an agent can orchestrate "material → knowledge base → generation → output."
-2. **Deep content generation** — ingest files/URLs/web research, align to Taiwan's 108課綱, and generate quizzes/lessons/boards that are *validated and Bloom-depth-scored*.
+2. **Deep content generation** — ingest files/URLs/images, align to Taiwan's 108課綱, and generate quizzes/lessons/boards that are *validated and Bloom-depth-scored*.
 3. **High-fidelity delivery** — each platform gets its best supported path (official API where one exists, official import/export file otherwise) plus full Google Workspace + Classroom + Firebase output.
 
 ### Four surfaces (cross-agent)
 
 | Surface | What | For |
 |---------|------|-----|
-| **MCP server** | 43 tools | the universal layer — every agent |
+| **MCP server** | 51 tools | the universal layer — every agent |
 | **CLI** (`edu-agent-kit`) | scaffold wiki, Google auth, exports, doctor | any terminal/agent |
 | **Skills** | 5 educator workflows (繁中) | Claude & skill-capable agents |
 | **Claude Code Plugin** | one-click bundle (MCP + skills) | the Claude ecosystem |
@@ -60,7 +60,7 @@ node apps/cli/dist/index.js init --dir ~/my-teaching-wiki --template workflow \
   --name "您的稱呼" --grades "國中" --subjects "數學" --agents claude --google docs,classroom
 
 # 3. (optional) Authorize Google
-node apps/cli/dist/index.js auth google --services docs,slides,forms,sheets,drive,classroom
+node apps/cli/dist/index.js auth login
 
 # 4. Check setup
 node apps/cli/dist/index.js doctor
@@ -70,11 +70,14 @@ Then connect your agent (below) and say things like *"ingest raw/這課.pdf, gen
 
 ---
 
-## Tool catalog (43 tools)
+## Tool catalog (51 tools)
 
-- **Content (5):** `content_ingest_source`, `content_align_curriculum`, `content_generate_quiz` / `_lesson` / `_board` (web research uses your agent's built-in capability — no extra API)
+- **Content (7):** `content_ingest_source`, `content_ingest_image` (handwriting/photos via your agent's vision), `content_ingest_folder` (batch), `content_align_curriculum` (real 108課綱 dataset), `content_generate_quiz` / `_lesson` / `_board`
 - **Knowledge base (3):** `wiki_list_templates`, `wiki_scaffold`, `wiki_status`
-- **Padlet (5)** · **Google Classroom (13)** · **Google Workspace (8):** `google_docs_create` / `_from_lesson`, `google_slides_create_from_lesson`, `google_forms_create_from_quiz`, `google_sheets_create`, `drive_create_folder` / `drive_upload_file` / `drive_set_sharing`
+- **Word (.docx) (2):** `docx_create_lesson`, `docx_create_quiz` (student/teacher answer-key versions)
+- **Interactive teach-apps (2):** `teachapp_build` (quiz/flashcards), `teachapp_deploy` (Vercel/GitHub Pages)
+- **Padlet (5)** · **Google Classroom (13)**
+- **Google Workspace (10):** Docs / Slides / Forms / Sheets create + `drive_create_folder` / `drive_upload_file` / `drive_set_sharing` / `drive_import_folder` (batch import) / `google_forms_read` (read-back)
 - **Firebase (1):** `firebase_deploy_hosting`
 - **Kahoot (3)** · **Wayground (1)** · **Wordwall (2)** · **Nearpod (1)**
 - **Workflow (1):** `workflow_generate_and_distribute` (generate → deliver → distribute)
@@ -111,7 +114,7 @@ All optional — missing keys only disable their own tools. Where to get each: *
 
 > Web search is intentionally **not** a separate integration — use your agent's built-in web search and feed findings into `content_ingest_source` or directly into the conversation.
 
-Google authorization is one-time: `edu-agent-kit auth google` (or `node packages/adapters/google-classroom/dist/auth-cli.js`).
+Google authorization is one-time: `edu-agent-kit auth login` (or `node packages/adapters/google-classroom/dist/auth-cli.js`).
 
 ---
 
@@ -136,7 +139,7 @@ edu-agent-kit/                 pnpm monorepo
 │       ├── google-shared/  google-classroom/  google-workspace/  firebase/
 │       └── padlet/ kahoot/ wayground/ wordwall/ nearpod/
 └── apps/
-    ├── server/                single MCP server (43 tools)
+    ├── server/                single MCP server (51 tools)
     └── cli/                   edu-agent-kit CLI
 ```
 

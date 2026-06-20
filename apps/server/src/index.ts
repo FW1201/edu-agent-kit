@@ -29,7 +29,7 @@ import { waygroundTools } from "@edu-agent-kit/wayground";
 import { wordwallTools } from "@edu-agent-kit/wordwall";
 import { nearpodTools } from "@edu-agent-kit/nearpod";
 
-const VERSION = "0.2.1";
+const VERSION = "0.3.0";
 
 const allTools: ToolDefinition[] = [
   ...contentTools,

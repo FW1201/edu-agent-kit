@@ -1,7 +1,7 @@
 {
   "name": "edu-agent-kit",
   "description": "教育工作者的 agent 知識庫與工具組：建立本地 LLM-wiki、生成有深度的教學內容，並輸出/派送到 Kahoot、Padlet、Nearpod、Wordwall、Wayground、Google Workspace、Google Classroom、Firebase。",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "author": {
     "name": "Kevin Wu (FW1201)"
   },

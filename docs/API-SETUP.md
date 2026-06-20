@@ -27,7 +27,7 @@
 6. 複製 **Client ID** 與 **Client secret**，填入 `GOOGLE_CLIENT_ID`、`GOOGLE_CLIENT_SECRET`。
 7. 一次性授權：
    ```bash
-   node apps/cli/dist/index.js auth google --services docs,slides,forms,sheets,drive,classroom
+   node apps/cli/dist/index.js auth login
    ```
    依畫面網址登入授權；token 會存到 `.tokens/google-token.json`。
    > 預設 redirect 為 `http://localhost:3000/oauth2callback`；如需更改，設 `GOOGLE_REDIRECT_URI` 並在 OAuth client 的「Authorized redirect URIs」加入同一網址。

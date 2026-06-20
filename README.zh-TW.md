@@ -15,14 +15,14 @@
 課堂工具內建的 AI 產出內容太淺、無法接上 agent 工作流、也很難吃進你自己的教材。edu-agent-kit 把整條流程打通：
 
 1. **本地 LLM-wiki**：一鍵建立教學知識庫（範本化資料夾、agent 記憶/`CLAUDE.md`、調度指令），讓 agent 把「素材 → 知識庫 → 生成 → 輸出」整條串起來。
-2. **深度內容生成**：吃進檔案/網址/網路搜尋，對齊 108 課綱，生成測驗/課程/看板，並做**驗證與 Bloom 深度評分**。
+2. **深度內容生成**：吃進檔案/網址/圖片，對齊 108 課綱，生成測驗/課程/看板，並做**驗證與 Bloom 深度評分**。
 3. **高保真輸出**：每個平台用最合適的官方路徑（有 API 走 API，沒有就產官方匯入/匯出檔），外加完整 Google Workspace + Classroom + Firebase 輸出。
 
 ### 四種介面（跨 agent）
 
 | 介面 | 內容 | 適用 |
 |------|------|------|
-| **MCP server** | 43 個工具 | 通用層——所有 agent |
+| **MCP server** | 51 個工具 | 通用層——所有 agent |
 | **CLI**（`edu-agent-kit`） | 建知識庫、Google 授權、輸出、doctor | 任何終端機/agent |
 | **Skills** | 5 個教師工作流（繁中） | Claude 及支援 skill 的 agent |
 | **Claude Code Plugin** | 一鍵套件（MCP + skills） | Claude 生態 |
@@ -59,7 +59,7 @@ node apps/cli/dist/index.js init --dir ~/我的教學wiki --template workflow \
   --name "您的稱呼" --grades "國中" --subjects "數學" --agents claude --google docs,classroom
 
 # 3.（選用）授權 Google
-node apps/cli/dist/index.js auth google --services docs,slides,forms,sheets,drive,classroom
+node apps/cli/dist/index.js auth login
 
 # 4. 檢查環境
 node apps/cli/dist/index.js doctor
@@ -161,15 +161,18 @@ TRANSPORT=http PORT=3000 node apps/server/dist/index.js   # → http://127.0.0.1
 
 > 網路搜尋刻意**不**做成額外整合——直接用你的 agent（Claude/Cursor/Codex…）內建的網路搜尋能力，把找到的內容餵給 `content_ingest_source` 或直接整理進對話即可，不需要額外申請金鑰。
 
-Google 授權只需一次：`edu-agent-kit auth google`（或 `node packages/adapters/google-classroom/dist/auth-cli.js`）。把 `.env.example` 複製成 `.env` 填入即可。
+Google 授權只需一次：`edu-agent-kit auth login`（或 `node packages/adapters/google-classroom/dist/auth-cli.js`）。把 `.env.example` 複製成 `.env` 填入即可。
 
 ---
 
-## 工具總覽（43 個）
+## 工具總覽（51 個）
 
-- **內容生成（5）**：`content_ingest_source`、`content_align_curriculum`、`content_generate_quiz`/`_lesson`/`_board`
+- **內容處理（7）**：`content_ingest_source`、`content_ingest_image`（手寫/照片，用 agent 視覺）、`content_ingest_folder`（批次）、`content_align_curriculum`（真實 108 課綱資料）、`content_generate_quiz`/`_lesson`/`_board`
 - **知識庫（3）**：`wiki_list_templates`、`wiki_scaffold`、`wiki_status`
-- **Padlet（5）** · **Google Classroom（13）** · **Google Workspace（8）**：Docs/Slides/Forms/Sheets + Drive 建資料夾/上傳/分享
+- **Word 文件（2）**：`docx_create_lesson`、`docx_create_quiz`（學生/教師含解答兩版）
+- **互動教具（2）**：`teachapp_build`（測驗/閃卡）、`teachapp_deploy`（Vercel/GitHub Pages）
+- **Padlet（5）** · **Google Classroom（13）**
+- **Google Workspace（10）**：Docs/Slides/Forms/Sheets + Drive 建資料夾/上傳/分享/`drive_import_folder`（資料夾批次匯入）/`google_forms_read`（回讀）
 - **Firebase（1）**：`firebase_deploy_hosting`
 - **Kahoot（3）** · **Wayground（1）** · **Wordwall（2）** · **Nearpod（1）**
 - **一條龍（1）**：`workflow_generate_and_distribute`（生成 → 產出 → 派送）
