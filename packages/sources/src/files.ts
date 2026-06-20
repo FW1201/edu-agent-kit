@@ -9,6 +9,9 @@ function makeId(prefix: string): string {
 
 const TEXT_EXTS = new Set([".txt", ".md", ".markdown", ".csv", ".json"]);
 
+/** All file extensions ingestFile can handle. */
+export const SUPPORTED_EXTS = new Set([".pdf", ".docx", ...TEXT_EXTS]);
+
 const NBSP = String.fromCharCode(160);
 
 /**
@@ -73,4 +76,43 @@ export async function ingestFile(filePath: string): Promise<SourceMaterial> {
     citations: [{ label: title }],
     retrievedAt: new Date().toISOString(),
   };
+}
+
+export interface FolderIngestResult {
+  materials: SourceMaterial[];
+  /** Files that failed to ingest, with the reason. */
+  errors: { file: string; error: string }[];
+}
+
+/**
+ * Batch-ingest every supported file in a local folder. With `recursive`, walks
+ * subfolders too. Unsupported types are skipped; per-file failures are collected
+ * (not thrown) so one bad file doesn't abort the whole batch.
+ */
+export async function ingestFolder(
+  dir: string,
+  opts: { recursive?: boolean } = {},
+): Promise<FolderIngestResult> {
+  const materials: SourceMaterial[] = [];
+  const errors: { file: string; error: string }[] = [];
+
+  async function walk(current: string): Promise<void> {
+    const entries = await fs.readdir(current, { withFileTypes: true });
+    for (const e of entries) {
+      const full = path.join(current, e.name);
+      if (e.isDirectory()) {
+        if (opts.recursive) await walk(full);
+        continue;
+      }
+      if (!SUPPORTED_EXTS.has(path.extname(e.name).toLowerCase())) continue;
+      try {
+        materials.push(await ingestFile(full));
+      } catch (err) {
+        errors.push({ file: full, error: err instanceof Error ? err.message : String(err) });
+      }
+    }
+  }
+
+  await walk(dir);
+  return { materials, errors };
 }

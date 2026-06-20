@@ -17,7 +17,7 @@ import {
   scoreDepth,
   SourceMaterial,
 } from "@edu-agent-kit/core";
-import { ingestFile, ingestUrl, alignCurriculum } from "@edu-agent-kit/sources";
+import { ingestFile, ingestUrl, ingestFolder, alignCurriculum } from "@edu-agent-kit/sources";
 
 function parseSources(input: unknown): SourceMaterial[] {
   const parsed = z.array(SourceMaterial).safeParse(input ?? []);
@@ -57,6 +57,37 @@ Returns (structuredContent): a SourceMaterial { id, origin, title?, text, citati
         `# Ingested: ${material.title ?? material.id}\n\n- **Origin:** ${material.origin}\n- **Chars:** ${material.text.length}\n\n## Preview\n${preview}…`,
         material,
       );
+    } catch (err) {
+      return errorResult(handleApiError(err, "Sources"));
+    }
+  },
+});
+
+const IngestFolderInput = z
+  .object({
+    dir: z.string().min(1).describe("Local folder to batch-ingest."),
+    recursive: z.boolean().default(false).describe("Walk subfolders too."),
+  })
+  .strict();
+
+export const ingestFolderTool = defineTool({
+  name: "content_ingest_folder",
+  title: "Ingest a Folder (batch)",
+  description: `Batch-ingest every supported file (.pdf/.docx/.txt/.md/.csv/.json) in a local folder into SourceMaterial[]. Unsupported types are skipped; per-file failures are reported, not fatal.
+
+Args: dir (string), recursive (boolean, default false).
+Returns (structuredContent): { count, sources: SourceMaterial[], errors: [{file,error}] }. Pass 'sources' to content_generate_*.`,
+  inputSchema: IngestFolderInput,
+  annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: false, openWorldHint: true },
+  handler: async (args) => {
+    try {
+      const res = await ingestFolder(args.dir, { recursive: args.recursive });
+      const md = [
+        `# Ingested folder: ${args.dir}`,
+        `- Files ingested: ${res.materials.length}`,
+        res.errors.length ? `- Skipped/failed: ${res.errors.length}` : ``,
+      ].filter(Boolean).join("\n");
+      return dualResult(md, { count: res.materials.length, sources: res.materials, errors: res.errors });
     } catch (err) {
       return errorResult(handleApiError(err, "Sources"));
     }
@@ -265,6 +296,7 @@ Returns: brief (text) on step 1; structuredContent { board, warnings } on step 2
 
 export const contentTools: ToolDefinition[] = [
   ingestSourceTool,
+  ingestFolderTool,
   alignCurriculumTool,
   generateQuizTool,
   generateLessonTool,
