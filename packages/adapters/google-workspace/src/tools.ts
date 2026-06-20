@@ -15,6 +15,7 @@ import {
   buildSheetGrid,
   sheetGridFromQuiz,
 } from "./builders.js";
+import path from "node:path";
 import {
   createDoc,
   createSlides,
@@ -23,6 +24,9 @@ import {
   driveCreateFolder,
   driveUploadFile,
   driveSetSharing,
+  driveListFolder,
+  driveDownloadFile,
+  readForm,
 } from "./api.js";
 
 const lessonError = (e: z.ZodError): string =>
@@ -233,6 +237,58 @@ Returns (structuredContent): { fileId, role, type }. Requires drive.file scope.`
   },
 });
 
+export const driveImportFolderTool = defineTool({
+  name: "drive_import_folder",
+  title: "Import a Drive Folder (batch download)",
+  description: `Download every file in a Google Drive folder to a local directory so they can be ingested (e.g. an existing 教材庫). Google Docs/Sheets/Slides are exported to text/csv; other files download as-is.
+
+Args: folderId (string), destDir? (defaults ./out/drive-import).
+Returns (structuredContent): { dir, count, files: string[], errors }. Next: run content_ingest_folder on 'dir'. Requires drive.file scope.`,
+  inputSchema: z.object({ folderId: z.string().min(1), destDir: z.string().optional() }).strict(),
+  annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: true },
+  handler: async (args) => {
+    try {
+      const dir = args.destDir ?? path.join(process.cwd(), "out", "drive-import");
+      const metas = await driveListFolder(args.folderId);
+      const files: string[] = [];
+      const errors: { name: string; error: string }[] = [];
+      for (const m of metas) {
+        try {
+          files.push(await driveDownloadFile(m, dir));
+        } catch (e) {
+          errors.push({ name: m.name, error: e instanceof Error ? e.message : String(e) });
+        }
+      }
+      const md = [`# Drive folder imported → ${dir}`, `- Downloaded: ${files.length}`, errors.length ? `- Failed: ${errors.length}` : ``]
+        .filter(Boolean)
+        .join("\n");
+      return dualResult(md, { dir, count: files.length, files, errors });
+    } catch (err) {
+      return errorResult(handleApiError(err, "Google Drive"));
+    }
+  },
+});
+
+export const formsReadTool = defineTool({
+  name: "google_forms_read",
+  title: "Read a Google Form (for remix)",
+  description: `Read an existing Google Form into a simplified structure (title + questions with options) so it can be remixed/regenerated.
+
+Args: formId (string).
+Returns (structuredContent): { title, questions: [{prompt, type, options[]}] }. Requires forms.body scope.`,
+  inputSchema: z.object({ formId: z.string().min(1) }).strict(),
+  annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
+  handler: async (args) => {
+    try {
+      const form = await readForm(args.formId);
+      const md = [`# ${form.title}`, ``, ...form.questions.map((q, i) => `${i + 1}. ${q.prompt} (${q.type})`)].join("\n");
+      return dualResult(md, form);
+    } catch (err) {
+      return errorResult(handleApiError(err, "Google Forms"));
+    }
+  },
+});
+
 export const googleWorkspaceToolList: ToolDefinition[] = [
   docsFromLessonTool,
   docsCreateTool,
@@ -242,4 +298,6 @@ export const googleWorkspaceToolList: ToolDefinition[] = [
   driveCreateFolderTool,
   driveUploadFileTool,
   driveSetSharingTool,
+  driveImportFolderTool,
+  formsReadTool,
 ] as unknown as ToolDefinition[];
