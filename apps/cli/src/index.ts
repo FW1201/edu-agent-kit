@@ -3,7 +3,8 @@
  * edu-agent-kit CLI — cross-agent companion to the MCP server.
  *
  *   edu-agent-kit init [--dir .] [--template workflow|minimal] [flags]
- *   edu-agent-kit auth google [--services docs,slides,...]
+ *   edu-agent-kit auth login [google|padlet|kahoot|firebase|vercel]
+ *   edu-agent-kit auth logout [google|padlet|kahoot|firebase|vercel]
  *   edu-agent-kit auth status
  *   edu-agent-kit export <doc|slides|form|sheet|drive|firebase> [flags]
  *   edu-agent-kit doctor

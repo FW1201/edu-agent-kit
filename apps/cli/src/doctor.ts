@@ -12,7 +12,7 @@ export async function runDoctor(): Promise<void> {
     () => true,
     () => false,
   );
-  lines.push(`Google token: ${hasToken ? "✓ found" : "— run: edu-agent-kit auth google"}`);
+  lines.push(`Google token: ${hasToken ? "✓ found" : "— run: edu-agent-kit auth login"}`);
 
   const checks: [string, string][] = [
     ["GOOGLE_CLIENT_ID", "Google OAuth"],

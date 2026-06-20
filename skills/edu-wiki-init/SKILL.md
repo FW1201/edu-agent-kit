@@ -21,7 +21,7 @@ description: 建立或客製化教育工作者的本地教學知識庫（LLM-wik
    ```
    或用 MCP 工具 `wiki_scaffold`（若已掛載 server）。
 4. **說明產出**：建立後會有 `WIKI.md`（框架說明）、`wiki/`（index.md 目錄、log.md 日誌）、`raw/`（放素材）、`memory/`、各 agent 的核心檔（CLAUDE.md/AGENTS.md/GEMINI.md/.cursor）與 `.mcp.json`。
-5. **下一步引導**：1) `edu-agent-kit auth google` 授權；2) 把素材放進 `raw/`；3) 用 `edu-wiki-ops` 的 ingest 把素材整理進知識庫。
+5. **下一步引導**：1) `edu-agent-kit auth login` 授權；2) 把素材放進 `raw/`；3) 用 `edu-wiki-ops` 的 ingest 把素材整理進知識庫。
 
 ## 原則
 - 繁體中文（台灣用語）。raw/ 唯讀；不覆蓋既有檔案（除非老師要求）。

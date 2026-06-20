@@ -105,7 +105,7 @@ export async function runInit(args: string[]): Promise<void> {
   const summary = [
     `知識庫已建立：${res.targetDir}（範本：${res.templateId}）`,
     `  資料夾：${res.createdDirs.length}　檔案：${res.createdFiles.length}　略過：${res.skipped.length}`,
-    `下一步：1) edu-agent-kit auth google  2) 把素材放進 raw/  3) 對 agent 說「ingest raw/...」`,
+    `下一步：1) edu-agent-kit auth login  2) 把素材放進 raw/  3) 對 agent 說「ingest raw/...」`,
   ].join("\n");
   if (interactive) p.outro(summary);
   else process.stdout.write(summary + "\n");
