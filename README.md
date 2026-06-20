@@ -23,7 +23,7 @@ Native AI features in classroom tools produce shallow content, don't connect to 
 
 | Surface | What | For |
 |---------|------|-----|
-| **MCP server** | 44 tools | the universal layer — every agent |
+| **MCP server** | 43 tools | the universal layer — every agent |
 | **CLI** (`edu-agent-kit`) | scaffold wiki, Google auth, exports, doctor | any terminal/agent |
 | **Skills** | 5 educator workflows (繁中) | Claude & skill-capable agents |
 | **Claude Code Plugin** | one-click bundle (MCP + skills) | the Claude ecosystem |
@@ -70,9 +70,9 @@ Then connect your agent (below) and say things like *"ingest raw/這課.pdf, gen
 
 ---
 
-## Tool catalog (44 tools)
+## Tool catalog (43 tools)
 
-- **Content (6):** `content_ingest_source`, `content_web_research`, `content_align_curriculum`, `content_generate_quiz` / `_lesson` / `_board`
+- **Content (5):** `content_ingest_source`, `content_align_curriculum`, `content_generate_quiz` / `_lesson` / `_board` (web research uses your agent's built-in capability — no extra API)
 - **Knowledge base (3):** `wiki_list_templates`, `wiki_scaffold`, `wiki_status`
 - **Padlet (5)** · **Google Classroom (13)** · **Google Workspace (8):** `google_docs_create` / `_from_lesson`, `google_slides_create_from_lesson`, `google_forms_create_from_quiz`, `google_sheets_create`, `drive_create_folder` / `drive_upload_file` / `drive_set_sharing`
 - **Firebase (1):** `firebase_deploy_hosting`
@@ -107,8 +107,9 @@ All optional — missing keys only disable their own tools. Where to get each: *
 | `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | Google Docs/Slides/Forms/Sheets/Drive/Classroom |
 | `PADLET_API_KEY` | Padlet |
 | `KAHOOT_API_KEY` | Kahoot Reports API |
-| `TAVILY_API_KEY` | web research |
 | `FIREBASE_TOKEN` / `FIREBASE_PROJECT` | Firebase Hosting |
+
+> Web search is intentionally **not** a separate integration — use your agent's built-in web search and feed findings into `content_ingest_source` or directly into the conversation.
 
 Google authorization is one-time: `edu-agent-kit auth google` (or `node packages/adapters/google-classroom/dist/auth-cli.js`).
 
@@ -135,7 +136,7 @@ edu-agent-kit/                 pnpm monorepo
 │       ├── google-shared/  google-classroom/  google-workspace/  firebase/
 │       └── padlet/ kahoot/ wayground/ wordwall/ nearpod/
 └── apps/
-    ├── server/                single MCP server (44 tools)
+    ├── server/                single MCP server (43 tools)
     └── cli/                   edu-agent-kit CLI
 ```
 

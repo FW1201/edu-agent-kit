@@ -25,7 +25,7 @@ pnpm build
 驗證：
 
 ```bash
-node apps/server/dist/index.js   # 應印出 "edu-agent-kit-server vX running on stdio (44 tools)"，Ctrl+C 結束
+node apps/server/dist/index.js   # 應印出 "edu-agent-kit-server vX running on stdio (43 tools)"，Ctrl+C 結束
 node apps/cli/dist/index.js doctor
 ```
 

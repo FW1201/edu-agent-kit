@@ -7,7 +7,7 @@ description: 為台灣老師生成有深度的測驗題組，並輸出成 Kahoot
 
 ## 步驟
 
-1. **取材**：若老師指定 raw/ 素材或檔案/URL，先用 `content_ingest_source`；需要補充時用 `content_web_research`。可用 `content_align_curriculum` 對齊 108 課綱。
+1. **取材**：若老師指定 raw/ 素材或檔案/URL，先用 `content_ingest_source`；需要補充時直接用你（agent）內建的網路搜尋能力查詢。可用 `content_align_curriculum` 對齊 108 課綱。
 2. **生成（兩步）**：
    - 先呼叫 `content_generate_quiz`（不帶 draftQuestions）取得「生成 brief」（含 Bloom 分布與深度要求）。
    - 依 brief 撰寫題目（每題設 bloomLevel、解析 explanation、選擇題誘答 rationale、開放題 rubric），再呼叫 `content_generate_quiz` 帶上 `draftQuestions` 進行驗證與深度評分。若深度分數低或有 warnings，**重生成**淺題。

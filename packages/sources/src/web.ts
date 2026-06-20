@@ -1,10 +1,5 @@
 import { parse } from "node-html-parser";
-import {
-  httpRequest,
-  ToolError,
-  optionalEnv,
-  MissingCredentialError,
-} from "@edu-agent-kit/mcp-shared";
+import { httpRequest, ToolError } from "@edu-agent-kit/mcp-shared";
 import type { SourceMaterial } from "@edu-agent-kit/core";
 
 function makeId(prefix: string): string {
@@ -55,56 +50,4 @@ export async function ingestUrl(url: string): Promise<SourceMaterial> {
     citations: [{ label: title ?? url, url }],
     retrievedAt: new Date().toISOString(),
   };
-}
-
-interface TavilyResult {
-  title: string;
-  url: string;
-  content: string;
-}
-interface TavilyResponse {
-  answer?: string;
-  results: TavilyResult[];
-}
-
-/**
- * Web search via Tavily (set TAVILY_API_KEY or WEB_SEARCH_API_KEY). Returns one
- * SourceMaterial per result. Throws MissingCredentialError if no key is set.
- */
-export async function webSearch(
-  query: string,
-  maxResults = 5,
-): Promise<SourceMaterial[]> {
-  const apiKey = optionalEnv("TAVILY_API_KEY") ?? optionalEnv("WEB_SEARCH_API_KEY");
-  if (!apiKey) {
-    throw new MissingCredentialError(
-      "TAVILY_API_KEY",
-      "Web search uses Tavily; set TAVILY_API_KEY (or WEB_SEARCH_API_KEY). Get one at https://tavily.com.",
-    );
-  }
-  const resp = await httpRequest<TavilyResponse>(
-    "https://api.tavily.com/search",
-    {
-      method: "POST",
-      json: {
-        api_key: apiKey,
-        query,
-        max_results: Math.min(Math.max(maxResults, 1), 20),
-        search_depth: "advanced",
-        include_answer: true,
-      },
-    },
-  );
-  const now = new Date().toISOString();
-  return resp.results.map((r) => ({
-    id: makeId("web"),
-    origin: "web_search" as const,
-    title: r.title,
-    locator: query,
-    mimeType: "text/plain",
-    text: r.content,
-    excerpts: [],
-    citations: [{ label: r.title, url: r.url }],
-    retrievedAt: now,
-  }));
 }

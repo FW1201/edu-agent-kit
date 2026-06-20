@@ -22,7 +22,7 @@
 
 | 介面 | 內容 | 適用 |
 |------|------|------|
-| **MCP server** | 44 個工具 | 通用層——所有 agent |
+| **MCP server** | 43 個工具 | 通用層——所有 agent |
 | **CLI**（`edu-agent-kit`） | 建知識庫、Google 授權、輸出、doctor | 任何終端機/agent |
 | **Skills** | 5 個教師工作流（繁中） | Claude 及支援 skill 的 agent |
 | **Claude Code Plugin** | 一鍵套件（MCP + skills） | Claude 生態 |
@@ -157,16 +157,17 @@ TRANSPORT=http PORT=3000 node apps/server/dist/index.js   # → http://127.0.0.1
 | `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | Google Docs/Slides/Forms/Sheets/Drive/Classroom |
 | `PADLET_API_KEY` | Padlet |
 | `KAHOOT_API_KEY` | Kahoot Reports API（成績分析） |
-| `TAVILY_API_KEY` | 網路搜尋取材 |
 | `FIREBASE_TOKEN` / `FIREBASE_PROJECT` | Firebase 發布 |
+
+> 網路搜尋刻意**不**做成額外整合——直接用你的 agent（Claude/Cursor/Codex…）內建的網路搜尋能力，把找到的內容餵給 `content_ingest_source` 或直接整理進對話即可，不需要額外申請金鑰。
 
 Google 授權只需一次：`edu-agent-kit auth google`（或 `node packages/adapters/google-classroom/dist/auth-cli.js`）。把 `.env.example` 複製成 `.env` 填入即可。
 
 ---
 
-## 工具總覽（44 個）
+## 工具總覽（43 個）
 
-- **內容生成（6）**：`content_ingest_source`、`content_web_research`、`content_align_curriculum`、`content_generate_quiz`/`_lesson`/`_board`
+- **內容生成（5）**：`content_ingest_source`、`content_align_curriculum`、`content_generate_quiz`/`_lesson`/`_board`
 - **知識庫（3）**：`wiki_list_templates`、`wiki_scaffold`、`wiki_status`
 - **Padlet（5）** · **Google Classroom（13）** · **Google Workspace（8）**：Docs/Slides/Forms/Sheets + Drive 建資料夾/上傳/分享
 - **Firebase（1）**：`firebase_deploy_hosting`

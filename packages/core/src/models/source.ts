@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 /** Origin of an ingested external resource. */
-export const SourceOrigin = z.enum(["file", "url", "web_search", "manual"]);
+export const SourceOrigin = z.enum(["file", "url", "manual"]);
 export type SourceOrigin = z.infer<typeof SourceOrigin>;
 
 /**

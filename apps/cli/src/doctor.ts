@@ -19,7 +19,6 @@ export async function runDoctor(): Promise<void> {
     ["GOOGLE_CLIENT_SECRET", "Google OAuth"],
     ["PADLET_API_KEY", "Padlet"],
     ["KAHOOT_API_KEY", "Kahoot Reports"],
-    ["TAVILY_API_KEY", "Web research"],
     ["FIREBASE_TOKEN", "Firebase deploy"],
     ["FIREBASE_PROJECT", "Firebase project"],
   ];

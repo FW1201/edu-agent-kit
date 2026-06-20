@@ -17,12 +17,7 @@ import {
   scoreDepth,
   SourceMaterial,
 } from "@edu-agent-kit/core";
-import {
-  ingestFile,
-  ingestUrl,
-  webSearch,
-  alignCurriculum,
-} from "@edu-agent-kit/sources";
+import { ingestFile, ingestUrl, alignCurriculum } from "@edu-agent-kit/sources";
 
 function parseSources(input: unknown): SourceMaterial[] {
   const parsed = z.array(SourceMaterial).safeParse(input ?? []);
@@ -64,40 +59,6 @@ Returns (structuredContent): a SourceMaterial { id, origin, title?, text, citati
       );
     } catch (err) {
       return errorResult(handleApiError(err, "Sources"));
-    }
-  },
-});
-
-const ResearchInput = z
-  .object({
-    query: z.string().min(2).describe("Web search query."),
-    maxResults: z.number().int().min(1).max(20).default(5),
-  })
-  .strict();
-
-export const webResearchTool = defineTool({
-  name: "content_web_research",
-  title: "Web Research",
-  description: `Search the web (via Tavily; set TAVILY_API_KEY or WEB_SEARCH_API_KEY) and return results as SourceMaterial[] to ground generated content in current information.
-
-Args:
-  - query (string): the search query.
-  - maxResults (number): 1-20, default 5.
-
-Returns (structuredContent): { sources: SourceMaterial[] }. Pass to content_generate_* as 'sources'.
-
-Error handling: returns a credential error if no web-search API key is configured.`,
-  inputSchema: ResearchInput,
-  annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: false, openWorldHint: true },
-  handler: async (args) => {
-    try {
-      const sources = await webSearch(args.query, args.maxResults);
-      return dualResult(
-        `# Web research: "${args.query}"\n\nFound ${sources.length} source(s):\n${sources.map((s) => `- ${s.title ?? s.id} (${s.citations[0]?.url ?? ""})`).join("\n")}`,
-        { sources },
-      );
-    } catch (err) {
-      return errorResult(handleApiError(err, "WebSearch"));
     }
   },
 });
@@ -158,7 +119,7 @@ export const generateQuizTool = defineTool({
 
 Args:
   - topic, questionCount (default 10), gradeLevel?, subject?, language (default zh-TW), questionTypes?[]
-  - sources?: SourceMaterial[] (from content_ingest_source / content_web_research)
+  - sources?: SourceMaterial[] (from content_ingest_source, or web-search results your agent already gathered, mapped to the SourceMaterial shape)
   - draftQuestions?: Question[] (author these from the brief, then call again)
   - alignment?: CurriculumAlignment
 
@@ -304,7 +265,6 @@ Returns: brief (text) on step 1; structuredContent { board, warnings } on step 2
 
 export const contentTools: ToolDefinition[] = [
   ingestSourceTool,
-  webResearchTool,
   alignCurriculumTool,
   generateQuizTool,
   generateLessonTool,

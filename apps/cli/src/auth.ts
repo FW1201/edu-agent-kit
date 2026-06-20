@@ -33,7 +33,6 @@ export async function runAuthStatus(): Promise<void> {
     "GOOGLE_CLIENT_SECRET",
     "PADLET_API_KEY",
     "KAHOOT_API_KEY",
-    "TAVILY_API_KEY",
     "FIREBASE_TOKEN",
     "FIREBASE_PROJECT",
   ];

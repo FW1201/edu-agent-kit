@@ -8,8 +8,9 @@
 | Google（Docs/Slides/Forms/Sheets/Drive/Classroom） | `GOOGLE_CLIENT_ID`、`GOOGLE_CLIENT_SECRET` | 免費 |
 | Padlet | `PADLET_API_KEY` | 需 Padlet 訂閱 |
 | Kahoot Reports API | `KAHOOT_API_KEY` | 需 EDU/企業方案 |
-| 網路搜尋（Tavily） | `TAVILY_API_KEY` | 有免費額度 |
 | Firebase Hosting | `FIREBASE_TOKEN`、`FIREBASE_PROJECT` | 免費方案可用 |
+
+> 補充：取材時若需要查網路上的最新資訊，直接用你 agent（Claude/Cursor/Codex…）內建的網路搜尋能力即可，不需要為此額外申請 API 金鑰——把找到的內容餵給 `content_ingest_source`（檔案/URL）或直接整理進對話即可。
 
 ---
 
@@ -53,15 +54,7 @@
 
 ---
 
-## 4. 網路搜尋（Tavily）
-
-1. 前往 https://tavily.com/ 註冊（有免費額度）。
-2. 取得 API key，填入 `TAVILY_API_KEY`（或 `WEB_SEARCH_API_KEY`）。
-- 用於 `content_web_research` 取材；不設定時改用檔案/URL 取材即可。
-
----
-
-## 5. Firebase Hosting（發布互動教材網頁）
+## 4. Firebase Hosting（發布互動教材網頁）
 
 1. 前往 **Firebase Console**：https://console.firebase.google.com/ 建立專案，記下 **Project ID** → 填入 `FIREBASE_PROJECT`。
 2. 安裝 CLI 並取得部署 token：
