@@ -12,3 +12,4 @@ export * from "./http.js";
 export * from "./auth.js";
 export * from "./browser.js";
 export * from "./credentials.js";
+export * from "./dotenv.js";

@@ -57,19 +57,27 @@ function parseClientSecretJson(raw: string): ClientCreds | undefined {
 }
 
 /**
- * Resolve OAuth client credentials. A bundled default client (shipped by the
- * project so teachers need no Cloud Console) is used if present; env always wins.
+ * Resolve OAuth client credentials.
+ *
+ * IMPORTANT: there is currently NO bundled default client shipped with this
+ * package — creating one requires a maintainer to register an OAuth app in
+ * Google Cloud Console under their own account, which this codebase cannot do
+ * on a user's behalf. Until/unless a `default-google-client.json` is actually
+ * placed alongside this file, every user must create their own free OAuth
+ * client (one-time, ~5 min) — see docs/API-SETUP.md — and set
+ * GOOGLE_CLIENT_ID/GOOGLE_CLIENT_SECRET (in `.env` or their shell/MCP host).
+ * `auth login` then only handles the one-click consent/token step *after* that.
  */
 function resolveClientCreds(): ClientCreds {
   const envId = optionalEnv("GOOGLE_CLIENT_ID");
   const envSecret = optionalEnv("GOOGLE_CLIENT_SECRET");
   if (envId && envSecret) return { clientId: envId, clientSecret: envSecret };
 
-  // A downloaded client_secret.json (env path or bundled default).
+  // A downloaded client_secret.json (explicit path, or a future bundled default
+  // if one is ever placed alongside this file — see comment above).
   const here = path.dirname(fileURLToPath(import.meta.url));
   const candidates = [
     optionalEnv("GOOGLE_CLIENT_SECRET_FILE"),
-    // bundled default shipped with the package (maintainer-provided, see docs)
     path.join(here, "..", "default-google-client.json"),
     path.join(here, "default-google-client.json"),
   ].filter((p): p is string => typeof p === "string" && p.length > 0);
@@ -83,7 +91,7 @@ function resolveClientCreds(): ClientCreds {
   }
   throw new MissingCredentialError(
     "GOOGLE_CLIENT_ID",
-    "No Google OAuth client configured. Either the bundled default client is missing, or set GOOGLE_CLIENT_ID/GOOGLE_CLIENT_SECRET (or GOOGLE_CLIENT_SECRET_FILE to a downloaded client_secret.json). See docs/API-SETUP.md.",
+    "No Google OAuth client configured yet. This is a one-time setup: create your own free OAuth client in Google Cloud Console, then set GOOGLE_CLIENT_ID/GOOGLE_CLIENT_SECRET (in .env or your shell/MCP host). Full steps: docs/API-SETUP.md.",
   );
 }
 

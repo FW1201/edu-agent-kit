@@ -9,10 +9,15 @@
  *   edu-agent-kit export <doc|slides|form|sheet|drive|firebase> [flags]
  *   edu-agent-kit doctor
  */
+import { loadDotEnv } from "@edu-agent-kit/mcp-shared";
 import { runInit } from "./init.js";
 import { runAuthLogin, runAuthLogout, runAuthStatus, runAuthGoogle } from "./auth.js";
 import { runExport } from "./export.js";
 import { runDoctor } from "./doctor.js";
+
+// Load .env (from cwd) before anything reads process.env. Explicit shell/MCP
+// host env vars still take priority (dotenv default behavior).
+loadDotEnv();
 
 const HELP = `edu-agent-kit — educator knowledge-base & content toolkit
 

@@ -59,12 +59,14 @@ pnpm install && pnpm build
 node apps/cli/dist/index.js init --dir ~/my-teaching-wiki --template workflow \
   --name "您的稱呼" --grades "國中" --subjects "數學" --agents claude --google docs,classroom
 
-# 3. (optional) Authorize Google
+# 3. (optional) Authorize Google — REQUIRES a one-time setup first, see below
 node apps/cli/dist/index.js auth login
 
 # 4. Check setup
 node apps/cli/dist/index.js doctor
 ```
+
+> ⚠️ **Before step 3 works**, you must create your own free Google OAuth client (one-time, ~5 min, in Google Cloud Console) and set `GOOGLE_CLIENT_ID`/`GOOGLE_CLIENT_SECRET` — there is no bundled default client. Full steps: **[docs/API-SETUP.md](docs/API-SETUP.md)**. `auth login` only handles the one-click consent/browser step *after* that; it does **not** replace it, and it is unrelated to any other Google login you may already have (browser, other MCP tools, etc.) — this toolkit's Google access is its own separate OAuth app.
 
 Then connect your agent (below) and say things like *"ingest raw/這課.pdf, generate a deep 8-question quiz for 國中, and build a Kahoot import file."*
 
@@ -114,7 +116,7 @@ All optional — missing keys only disable their own tools. Where to get each: *
 
 > Web search is intentionally **not** a separate integration — use your agent's built-in web search and feed findings into `content_ingest_source` or directly into the conversation.
 
-Google authorization is one-time: `edu-agent-kit auth login` (or `node packages/adapters/google-classroom/dist/auth-cli.js`).
+After you've created your own OAuth client and set `GOOGLE_CLIENT_ID`/`GOOGLE_CLIENT_SECRET` (see [docs/API-SETUP.md](docs/API-SETUP.md) — required, no client is bundled), the browser-consent step itself is one-time: `edu-agent-kit auth login` (or `node packages/adapters/google-classroom/dist/auth-cli.js`).
 
 ---
 

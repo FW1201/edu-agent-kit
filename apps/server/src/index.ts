@@ -13,7 +13,11 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import express from "express";
-import type { ToolDefinition } from "@edu-agent-kit/mcp-shared";
+import { loadDotEnv, type ToolDefinition } from "@edu-agent-kit/mcp-shared";
+
+// Load .env (from cwd) before anything reads process.env. Explicit shell/MCP
+// host env vars still take priority (dotenv default behavior).
+loadDotEnv();
 
 import { contentTools } from "./content-tools.js";
 import { workflowTools } from "./workflow-tools.js";

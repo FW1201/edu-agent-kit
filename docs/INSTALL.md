@@ -41,13 +41,13 @@ node apps/cli/dist/index.js doctor
 cp .env.example .env
 ```
 
-各金鑰申請步驟見 [API-SETUP.md](API-SETUP.md)。Google 第一次需授權：
+各金鑰申請步驟見 [API-SETUP.md](API-SETUP.md)。**Google 是其中唯一一個「光填 `.env` 還不夠」的項目**：`GOOGLE_CLIENT_ID`/`GOOGLE_CLIENT_SECRET` 必須是你自己在 Google Cloud Console 建立的真實值（目前沒有內建現成 client，純複製範本不會生效）；填好之後才執行：
 
 ```bash
 node apps/cli/dist/index.js auth login
 ```
 
-會印出同意畫面網址；在瀏覽器登入授權後，token 會寫入 `.tokens/google-token.json`（已被 `.gitignore` 排除，請勿提交）。
+會印出同意畫面網址（並自動開瀏覽器）；登入授權後，token 會寫入 `.tokens/google-token.json`（已被 `.gitignore` 排除，請勿提交）——**之後就不用再登入**，除非你執行 `auth logout`。這個授權跟你電腦/瀏覽器或其他 MCP 工具已登入的 Google 帳號無關，是這個工具自己獨立的 OAuth app。
 
 ---
 

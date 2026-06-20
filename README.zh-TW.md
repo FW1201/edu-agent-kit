@@ -58,12 +58,14 @@ pnpm install && pnpm build
 node apps/cli/dist/index.js init --dir ~/我的教學wiki --template workflow \
   --name "您的稱呼" --grades "國中" --subjects "數學" --agents claude --google docs,classroom
 
-# 3.（選用）授權 Google
+# 3.（選用）授權 Google —— 第一次用之前必須先做好下面的設定
 node apps/cli/dist/index.js auth login
 
 # 4. 檢查環境
 node apps/cli/dist/index.js doctor
 ```
+
+> ⚠️ **執行第 3 步之前**，你必須先自己在 Google Cloud Console 建立一個免費的 OAuth client（一次性設定，約 5 分鐘），並設定 `GOOGLE_CLIENT_ID`/`GOOGLE_CLIENT_SECRET`——**目前沒有內建現成的 client**。完整步驟見 **[docs/API-SETUP.md](docs/API-SETUP.md)**。`auth login` 只負責這之後「一鍵同意授權、開瀏覽器」的那一步，**不會取代**這個前置設定；它也跟你電腦/瀏覽器或其他 MCP 工具裡已經登入的 Google 帳號**無關**——這個工具的 Google 存取是獨立的一個 OAuth app。
 
 接著掛上你的 agent（見下），就能說：「ingest raw/這課.pdf，幫國中生出 8 題有深度的小考，並做成 Kahoot 匯入檔。」
 
@@ -161,7 +163,7 @@ TRANSPORT=http PORT=3000 node apps/server/dist/index.js   # → http://127.0.0.1
 
 > 網路搜尋刻意**不**做成額外整合——直接用你的 agent（Claude/Cursor/Codex…）內建的網路搜尋能力，把找到的內容餵給 `content_ingest_source` 或直接整理進對話即可，不需要額外申請金鑰。
 
-Google 授權只需一次：`edu-agent-kit auth login`（或 `node packages/adapters/google-classroom/dist/auth-cli.js`）。把 `.env.example` 複製成 `.env` 填入即可。
+**先**在 Google Cloud Console 建立自己的 OAuth client、把真實的 `GOOGLE_CLIENT_ID`/`GOOGLE_CLIENT_SECRET` 填進 `.env`（見 [docs/API-SETUP.md](docs/API-SETUP.md)——這一步是必須的，目前沒有內建現成 client；只複製 `.env.example` 而不填值是不夠的）。做完之後，瀏覽器同意授權那一步才是「只需一次」：`edu-agent-kit auth login`（或 `node packages/adapters/google-classroom/dist/auth-cli.js`）。
 
 ---
 
