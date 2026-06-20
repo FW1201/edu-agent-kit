@@ -23,6 +23,7 @@
     "@edu-agent-kit/google-classroom": "workspace:*",
     "@edu-agent-kit/google-workspace": "workspace:*",
     "@edu-agent-kit/docx": "workspace:*",
+    "@edu-agent-kit/teach-apps": "workspace:*",
     "@edu-agent-kit/firebase": "workspace:*",
     "@edu-agent-kit/wiki-kit": "workspace:*",
     "@edu-agent-kit/kahoot": "workspace:*",

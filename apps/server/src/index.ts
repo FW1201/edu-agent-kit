@@ -22,6 +22,7 @@ import { padletTools } from "@edu-agent-kit/padlet";
 import { googleClassroomTools } from "@edu-agent-kit/google-classroom";
 import { googleWorkspaceTools } from "@edu-agent-kit/google-workspace";
 import { docxTools } from "@edu-agent-kit/docx";
+import { teachAppsTools } from "@edu-agent-kit/teach-apps";
 import { firebaseTools } from "@edu-agent-kit/firebase";
 import { kahootTools } from "@edu-agent-kit/kahoot";
 import { waygroundTools } from "@edu-agent-kit/wayground";
@@ -37,6 +38,7 @@ const allTools: ToolDefinition[] = [
   ...googleClassroomTools,
   ...googleWorkspaceTools,
   ...docxTools,
+  ...teachAppsTools,
   ...firebaseTools,
   ...kahootTools,
   ...waygroundTools,

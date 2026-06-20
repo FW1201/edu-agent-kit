@@ -1,0 +1,21 @@
+{
+  "name": "@edu-agent-kit/teach-apps",
+  "version": "0.1.0",
+  "description": "Interactive teaching-app framework — build self-contained interactive activities (quiz, flashcards) from generated content and deploy them (Firebase/Vercel/GitHub Pages).",
+  "type": "module",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" } },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@edu-agent-kit/core": "workspace:*",
+    "@edu-agent-kit/mcp-shared": "workspace:*",
+    "zod": "^3.23.8"
+  }
+}
