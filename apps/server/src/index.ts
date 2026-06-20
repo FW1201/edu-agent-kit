@@ -21,6 +21,7 @@ import { wikiTools } from "./wiki-tools.js";
 import { padletTools } from "@edu-agent-kit/padlet";
 import { googleClassroomTools } from "@edu-agent-kit/google-classroom";
 import { googleWorkspaceTools } from "@edu-agent-kit/google-workspace";
+import { docxTools } from "@edu-agent-kit/docx";
 import { firebaseTools } from "@edu-agent-kit/firebase";
 import { kahootTools } from "@edu-agent-kit/kahoot";
 import { waygroundTools } from "@edu-agent-kit/wayground";
@@ -35,6 +36,7 @@ const allTools: ToolDefinition[] = [
   ...padletTools,
   ...googleClassroomTools,
   ...googleWorkspaceTools,
+  ...docxTools,
   ...firebaseTools,
   ...kahootTools,
   ...waygroundTools,
