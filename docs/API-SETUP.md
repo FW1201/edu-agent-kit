@@ -3,12 +3,14 @@
 每個整合的金鑰都是**可選的**——只有用到該平台時才需要，缺少時只會停用對應工具。
 設定方式：把金鑰填入專案根目錄的 `.env`（由 `.env.example` 複製），或填入各 agent MCP 設定的 `env` 區塊。
 
-| 平台 | 需要的變數 | 是否免費 |
+| 平台 | 需要的變數 / 登入方式 | 是否免費 |
 |------|-----------|---------|
-| Google（Docs/Slides/Forms/Sheets/Drive/Classroom） | `GOOGLE_CLIENT_ID`、`GOOGLE_CLIENT_SECRET` | 免費 |
+| Google（Docs/Slides/Forms/Sheets/Drive/Classroom） | `GOOGLE_CLIENT_ID`、`GOOGLE_CLIENT_SECRET`（需自建 OAuth client） | 免費 |
 | Padlet | `PADLET_API_KEY` | 需 Padlet 訂閱 |
 | Kahoot Reports API | `KAHOOT_API_KEY` | 需 EDU/企業方案 |
-| Firebase Hosting | `FIREBASE_TOKEN`、`FIREBASE_PROJECT` | 免費方案可用 |
+| Firebase Hosting（teach-app 部署目標之一） | `FIREBASE_TOKEN`、`FIREBASE_PROJECT` | 免費方案可用 |
+| Vercel（teach-app 部署目標之一） | 無金鑰，用 `vercel login`（見 §5） | 免費方案可用 |
+| GitHub Pages（teach-app 部署目標之一） | 無金鑰，用 git 倉庫 + `gh`（見 §6） | 免費 |
 
 > 補充：取材時若需要查網路上的最新資訊，直接用你 agent（Claude/Cursor/Codex…）內建的網路搜尋能力即可，不需要為此額外申請 API 金鑰——把找到的內容餵給 `content_ingest_source`（檔案/URL）或直接整理進對話即可。
 
@@ -65,6 +67,26 @@
    把 token 填入 `FIREBASE_TOKEN`。
 3. 之後 `firebase_deploy_hosting` 會用 `npx firebase-tools` 部署，回傳 `https://<project>.web.app` 網址。
 - 文件：https://firebase.google.com/docs/hosting
+
+---
+
+## 5. Vercel（互動教具 teach-app 的部署目標之一）
+
+不需要 API 金鑰，用 Vercel 自己的 CLI 登入即可（登入狀態存在你電腦，一次即可）：
+
+```bash
+node apps/cli/dist/index.js auth login vercel   # 等同 npx vercel login（互動）
+```
+
+之後 `teachapp_deploy` 指定 `target: vercel` 會用 `npx vercel --prod` 部署，回傳 `https://<...>.vercel.app` 網址。
+- 文件：https://vercel.com/docs/cli
+
+---
+
+## 6. GitHub Pages（互動教具 teach-app 的部署目標之一）
+
+不需要 API 金鑰；需在一個有 GitHub remote 的 git 倉庫內執行（會發布到 `gh-pages` 分支）。`teachapp_deploy` 指定 `target: github-pages` 會用 `npx gh-pages` 發布；網址依該 repo 的 Pages 設定而定。
+- 文件：https://docs.github.com/pages
 
 ---
 

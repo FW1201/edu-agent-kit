@@ -32,11 +32,11 @@ Native AI features in classroom tools produce shallow content, don't connect to 
 
 | Platform | Create | Read |
 |----------|--------|------|
-| **Padlet** | ✅ official API (board + posts) | ✅ |
+| **Padlet** | ✅ official API (AI board + posts) | ✅ |
 | **Google Classroom** | ✅ official API (assignments, materials, roster, grading) | ✅ |
-| **Google Docs / Slides / Forms / Sheets** | ✅ official API | — |
-| **Google Drive** | ✅ folders, upload, sharing | — |
-| **Firebase Hosting** | ✅ publish material as a web page | — |
+| **Google Docs / Slides / Forms / Sheets** | ✅ official API | ✅ Forms read-back |
+| **Google Drive** | ✅ folders, upload, sharing | ✅ folder import |
+| **Firebase Hosting / Vercel / GitHub Pages** | ✅ deploy interactive teach-apps as a web page | — |
 | **Kahoot!** | ⬇️ official `.xlsx` import | ✅ Reports API |
 | **Wayground (Quizizz)** | ⬇️ official spreadsheet import | — |
 | **Wordwall** | ⬇️ template content file | ✅ oEmbed |

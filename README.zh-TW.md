@@ -31,11 +31,11 @@
 
 | 平台 | 建立 | 讀取 |
 |------|------|------|
-| **Padlet** | ✅ 官方 API（看板＋貼文） | ✅ |
+| **Padlet** | ✅ 官方 API（AI 看板＋貼文） | ✅ |
 | **Google Classroom** | ✅ 官方 API（作業/教材/名冊/批改） | ✅ |
-| **Google Docs / Slides / Forms / Sheets** | ✅ 官方 API | — |
-| **Google Drive** | ✅ 建資料夾、上傳、分享 | — |
-| **Firebase Hosting** | ✅ 把教材發布成網頁 | — |
+| **Google Docs / Slides / Forms / Sheets** | ✅ 官方 API | ✅ Forms 回讀 |
+| **Google Drive** | ✅ 建資料夾、上傳、分享 | ✅ 資料夾批次匯入 |
+| **Firebase Hosting / Vercel / GitHub Pages** | ✅ 把互動教具發布成網頁 | — |
 | **Kahoot!** | ⬇️ 官方 `.xlsx` 匯入檔 | ✅ Reports API |
 | **Wayground（Quizizz）** | ⬇️ 官方試算表匯入 | — |
 | **Wordwall** | ⬇️ 範本內容檔 | ✅ oEmbed |
